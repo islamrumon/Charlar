@@ -124,16 +124,7 @@ function rendomForDigite()
 
 //Get file path
 //path is storage/app/
-function filePath($file)
-{
-    if ($file != null) {
-        if (file_exists(public_path($file))) {
-            return asset($file);
-        }
-    } else {
-        return asset('images/placeholder-image.png');
-    }
-}
+
 
 function fileUploadBase64($file_name, $image)
 {
@@ -254,16 +245,35 @@ function fileUploadWithName($file,  $name, $extention = 'js')
 
 function fileUpload($file, $folder, $name)
 {
-    $imageName = Str::slug($name) . rendomForDigite() . '.' . $file->extension();
-    $file->move(public_path('uploads/' . $folder), $imageName);
-    $path = 'uploads/' . $folder . '/' . $imageName;
-    return $path;
+    if($file != null){
+        $imageName = Str::slug($name) . rendomForDigite() . '.' . $file->extension();
+        $file->move(public_path('uploads/' . $folder), $imageName);
+        $path = 'uploads/' . $folder . '/' . $imageName;
+        return $path;
+    }else{
+        return Avatar::create($name)->toBase64();
+    }
 }
 
 
 function htmlLang(){
     //this is html lang value,
     return 'en';
+}
+
+function filePath($file)
+{
+    if(strpos($file, 'data:image') !== false){
+        return $file;
+    } else{
+        if (file_exists(public_path($file))) {
+            return asset($file);
+        }else{
+            return asset('avatar.jpg');
+        }
+       
+    }
+   
 }
 
 

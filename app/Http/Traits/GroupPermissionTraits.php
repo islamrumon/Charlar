@@ -43,7 +43,7 @@ trait GroupPermissionTraits
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8'],
         ]);
-  
+
 
         $user = new User();
         $user->name = $request->name;
@@ -64,9 +64,7 @@ trait GroupPermissionTraits
         }
 
         $user->password = Hash::make($request->password);
-        if ($request->hasFile('avatar')) {
-            $user->avatar = fileUpload($request->avatar, 'user', $request->email);
-        }
+        $user->avatar = fileUpload($request->avatar, 'user', $request->name);
         $user->save();
         if ($request->group_id != null) {
             foreach ($request->group_id as $item) {
@@ -91,10 +89,10 @@ trait GroupPermissionTraits
     public function userUpdateFirst(Request $request)
     {
 
-       
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-           
+
         ]);
 
         $user =  User::where('id', routeValDecode($request->id))->first();
@@ -106,11 +104,11 @@ trait GroupPermissionTraits
             $user->type = $request->type;
         }
         if ($request->hasFile('avatar')) {
-            $user->avatar = fileUpload($request->avatar, 'user', $request->email);
+            $user->avatar = fileUpload($request->avatar, 'user', $request->name);
         }
         $user->save();
 
-  
+
         if ($request->group_id != null) {
             //delete old data form group_has_permission table
             $user->revokeGroup($user->groups);
@@ -121,7 +119,7 @@ trait GroupPermissionTraits
 
             return redirect()->route('users.edit', routeValEncode($user->id))->with(['message' => translate('User Updates With Permission Successfully'), 'type' => 'success', 'title' => translate('Success')]);
         }
-        return redirect()->route('users.edit',routeValEncode($user->id))->with(['message' => translate('User Updated Successfully'), 'type' => 'success', 'title' => translate('Success')]);
+        return redirect()->route('users.edit', routeValEncode($user->id))->with(['message' => translate('User Updated Successfully'), 'type' => 'success', 'title' => translate('Success')]);
     }
 
     public function userUpdate(Request $request)
@@ -158,7 +156,7 @@ trait GroupPermissionTraits
     }
 
 
-    
+
 
 
     /*user banned*/
@@ -324,7 +322,7 @@ trait GroupPermissionTraits
             $group = Group::where('id', $request->id)->first();
             foreach ($request->permission_id as $item) {
 
-               $per = Permission::where('name', $item)->first();
+                $per = Permission::where('name', $item)->first();
                 if ($per != null) {
                     $group->assignPermission($per->name);
                 }

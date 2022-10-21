@@ -370,6 +370,7 @@ function IDinfo(id, type) {
       dataType: "JSON",
       success: (data) => {
         // avatar photo
+        console.log(data);
         $(".messenger-infoView")
           .find(".avatar")
           .css("background-image", 'url("' + data.user_avatar + '")');

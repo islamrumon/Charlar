@@ -77,6 +77,7 @@ class RegisterController extends Controller
         $user->name = $data['name'];
         $user->email = $data['email'];
         $user->type = 'user';
+        $user->avatar = fileUpload('','',$user->name);
         $user->password = Hash::make($data['password']);
         $user->slug = $slug;
         $user->save();
