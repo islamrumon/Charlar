@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d3237ee3bf40549cc2df3be50da6621f",
+    "content-hash": "5c794a14c4466fb999726443f627ccc3",
     "packages": [
         {
             "name": "arielmejiadev/larapex-charts",
@@ -1865,16 +1865,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "3.10.0",
+            "version": "3.10.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "839e794c443e759713aba2324d6d3d14acb31b4f"
+                "reference": "9857d7208a94fc63c7bf09caf223280e59ac7274"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/839e794c443e759713aba2324d6d3d14acb31b4f",
-                "reference": "839e794c443e759713aba2324d6d3d14acb31b4f",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/9857d7208a94fc63c7bf09caf223280e59ac7274",
+                "reference": "9857d7208a94fc63c7bf09caf223280e59ac7274",
                 "shasum": ""
             },
             "require": {
@@ -1936,7 +1936,7 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/flysystem/issues",
-                "source": "https://github.com/thephpleague/flysystem/tree/3.10.0"
+                "source": "https://github.com/thephpleague/flysystem/tree/3.10.1"
             },
             "funding": [
                 {
@@ -1952,7 +1952,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-10-21T18:18:46+00:00"
+            "time": "2022-10-21T18:57:47+00:00"
         },
         {
             "name": "league/mime-type-detection",
@@ -6125,6 +6125,43 @@
                 "source": "https://github.com/webmozarts/assert/tree/1.11.0"
             },
             "time": "2022-06-03T18:03:27+00:00"
+        },
+        {
+            "name": "yasserbelhimer/agora-access-token-generator",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yasserbelhimer/agora-access-token-generator.git",
+                "reference": "0658a971346320ef4464a789b1fa14dd4cf5bfa3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yasserbelhimer/agora-access-token-generator/zipball/0658a971346320ef4464a789b1fa14dd4cf5bfa3",
+                "reference": "0658a971346320ef4464a789b1fa14dd4cf5bfa3",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Yasser\\Agora\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "yasserbelhimer",
+                    "email": "yasserbelhimer@gmail.com"
+                }
+            ],
+            "description": "RTC Token generator",
+            "support": {
+                "issues": "https://github.com/yasserbelhimer/agora-access-token-generator/issues",
+                "source": "https://github.com/yasserbelhimer/agora-access-token-generator/tree/1.0.0"
+            },
+            "time": "2022-02-06T22:11:14+00:00"
         }
     ],
     "packages-dev": [

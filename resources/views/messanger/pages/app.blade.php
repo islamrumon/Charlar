@@ -75,6 +75,9 @@
                 </div>
                 {{-- header buttons --}}
                 <nav class="m-header-right">
+                    <input value="{{route('send.call')}}" type="hidden" id="callingUrl">
+                    <a href="#" class="video-call"><i class="fas fa-video"></i></a>
+                    <a href="#" class="audio-call"><i class="fas fa-phone"></i></a>
                     <a href="#" class="add-to-favorite"><i class="fas fa-star"></i></a>
                     <a href="/"><i class="fas fa-home"></i></a>
                     <a href="#" class="show-infoSide"><i class="fas fa-info-circle"></i></a>

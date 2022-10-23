@@ -46,6 +46,9 @@ class LoginController extends Controller
         //its work properly
         //now any time can wee add conditions
 
+        if ($user->type == 'user') {
+            return redirect()->route(config('chatify.routes.prefix'));
+        }
 
         if (true) {
             // $id = $user->id;

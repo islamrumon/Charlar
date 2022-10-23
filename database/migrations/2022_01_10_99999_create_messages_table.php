@@ -18,11 +18,11 @@ class CreateMessagesTable extends Migration
             $table->string('type');
             $table->bigInteger('from_id');
             $table->bigInteger('to_id');
-            $table->string('body',5000)->nullable();
+            $table->longText('body',5000)->nullable();
             $table->string('attachment')->nullable();
             $table->boolean('seen')->default(false);
+            $table->enum('message_type',['audio_call','video_call','text'])->default('text');
             $table->timestamps();
-
             $table->primary('id');
         });
     }

@@ -8,6 +8,7 @@
  * -----------------------------------------------------------------
  */
 
+use App\Http\Controllers\CallingController;
 use App\Http\Controllers\MessagesController;
 use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => 'messanger'], function () {
@@ -26,7 +27,11 @@ Route::post('/idInfo', [MessagesController::class,'idFetchData']);
  * Send message route
  */
 Route::post('/sendMessage',[MessagesController::class,'send'])->name('send.message');
-
+Route::post('/sendCall',[CallingController::class,'sendcallingRequest'])->name('send.call');
+Route::get('/join/{id}',[CallingController::class,'joinCalling'])->name('join.call');
+// Route::get('/join/request/{id}',[CallingController::class,'joinRequest'])->name('join.request.modal');
+Route::get('start/call/{id}',[CallingController::class,'startCall'])->name('start.call');
+Route::get('end/call/{id}',[CallingController::class,'endCall'])->name('end.call');
 /**
  * Fetch messages
  */

@@ -6,7 +6,12 @@ $(document).ready(function () {
     // Multi Select
     $(".select2-multi").select2();
     // select2 end
+
+   
 });
+
+//empji
+
 
 //published the all
 $('input[type="checkbox"]').change(function () {

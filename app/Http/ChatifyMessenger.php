@@ -2,8 +2,10 @@
 
 namespace App\Http;
 
+use App\Models\Calling;
 use App\Models\ChMessage as Message;
 use App\Models\ChFavorite as Favorite;
+use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use Pusher\Pusher;
 use Illuminate\Support\Facades\Auth;
@@ -117,7 +119,7 @@ class ChatifyMessenger
             $ext = pathinfo($attachment, PATHINFO_EXTENSION);
             $attachment_type = in_array($ext, self::getAllowedImages()) ? 'image' : 'file';
         }
-
+    
         return [
             'index' => $index,
             'id' => $msg->id,
@@ -175,7 +177,10 @@ class ChatifyMessenger
         $message->to_id = $data['to_id'];
         $message->body = $data['body'];
         $message->attachment = $data['attachment'];
+        $message->message_type = $data['message_type'];
         $message->save();
+
+        // call details save on condition here
     }
 
     /**

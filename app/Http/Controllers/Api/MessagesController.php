@@ -160,6 +160,7 @@ class MessagesController extends Controller
             Chatify::push('private-chatify', 'messaging', [
                 'from_id' => Auth::user()->id,
                 'to_id' => $request['id'],
+                'calling' => false,
                 'message' => Chatify::messageCard($messageData, 'default')
             ]);
         }
