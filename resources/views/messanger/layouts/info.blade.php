@@ -8,5 +8,6 @@
 {{-- shared photos --}}
 <div class="messenger-infoView-shared">
     <p class="messenger-title">shared photos</p>
+    fuck you
     <div class="shared-photos-list"></div>
 </div>
