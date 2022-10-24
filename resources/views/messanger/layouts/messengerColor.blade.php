@@ -45,6 +45,10 @@
   background: {{ $messengerColor }};
 }
 
+.profile-tab button.active {
+  background: {{ $messengerColor }} !important;
+}
+
 .messenger-sendCard button svg{
     color: {{ $messengerColor }};
 }

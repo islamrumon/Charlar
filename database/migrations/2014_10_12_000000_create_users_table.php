@@ -24,8 +24,6 @@ return new class extends Migration
             $table->boolean('banned')->default(false); // User cannot login if banned
             $table->string('avatar')->default('images/avatar.jpg');
             $table->timestamp('login_time')->nullable();
-            $table->string('fb_id')->nullable(); //for social login
-            $table->string('google_id')->nullable(); //for social login
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('code')->nullable();
@@ -39,9 +37,16 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->string('designation')->nullable();
             $table->string('city')->nullable();
-            $table->string('state')->nullable();
+            // $table->string('state')->nullable();
+
             $table->string('website')->nullable();
-            $table->longText('abount_me')->nullable();
+            $table->string('facebook')->nullable();
+            $table->string('twiter')->nullable();
+            $table->string('instragram')->nullable();
+            // $table->string('tiktok')->nullable();
+            $table->string('whats_app')->nullable();
+            $table->string('telegram')->nullable();
+            $table->string('cover')->default('cover.jpg');
             
         });
     }

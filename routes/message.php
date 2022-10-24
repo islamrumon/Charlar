@@ -9,7 +9,9 @@
  */
 
 use App\Http\Controllers\CallingController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MessagesController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => 'messanger'], function () {
 
@@ -17,6 +19,13 @@ Route::group(['prefix' => 'messanger'], function () {
 * This is the main app route [Chatify Messenger]
 */
 Route::get('/', [MessagesController::class,'index'])->name(config('chatify.routes.prefix'));
+
+// Route::get('/profile',function (){
+//     $user = User::where('id',25)->first();
+//  return view('messanger.profile',compact('user'));
+// });
+
+Route::post('profile/update',[HomeController::class,'profileUpdate'])->name('profile.update');
 
 /**
  *  Fetch info for specific id [user/group]

@@ -67,6 +67,7 @@ function updateSelectedContact(user_id) {
  */
 // Loading svg
 function loadingSVG(size = "25px", className = "", style = "") {
+
     return `
 <svg style="${style}" class="loadingSVG ${className}" xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 40 40" stroke="#ffffff">
 <g fill="none" fill-rule="evenodd">
@@ -193,6 +194,7 @@ function activeStatusCircle() {
 $(window).resize(function () {
     cssMediaQueries();
 });
+
 function cssMediaQueries() {
     if (window.matchMedia("(min-width: 980px)").matches) {
         $(".messenger-listView").removeAttr("style");
@@ -381,9 +383,12 @@ function IDinfo(id, type) {
             success: (data) => {
                 // avatar photo
                 console.log(data);
-                $(".messenger-infoView")
-                    .find(".avatar")
-                    .css("background-image", 'url("' + data.user_avatar + '")');
+                $('.info-profile').empty();
+                $('.info-profile').append(data.view);
+
+                // $(".messenger-infoView")
+                //     .find(".avatar")
+                //     .css("background-image", 'url("' + data.user_avatar + '")');
                 $(".header-avatar").css(
                     "background-image",
                     'url("' + data.user_avatar + '")'
@@ -1142,6 +1147,7 @@ function deleteMessage(id) {
  *-------------------------------------------------------------
  */
 function updateSettings() {
+    debugger
     const formData = new FormData($("#update-settings")[0]);
     if (messengerColor) {
         formData.append("messengerColor", messengerColor);
@@ -1636,6 +1642,7 @@ function callingRequest(type) {
             messageInput.focus();
         },
         success: (data) => {
+            console.log(data);
             if (data.error > 0) {
                 // message card error status
                 errorMessageCard(tempID);
