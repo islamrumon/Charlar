@@ -17,7 +17,7 @@ class CreateMessagesTable extends Migration
             $table->bigInteger('id');
             $table->string('type');
             $table->bigInteger('from_id');
-            $table->bigInteger('to_id');
+            $table->bigInteger('to_id');  //also user ase a group
             $table->longText('body',5000)->nullable();
             $table->string('attachment')->nullable();
             $table->boolean('seen')->default(false);

@@ -10,11 +10,11 @@
 <meta name="url" content="{{ url('') . '/' . config('chatify.routes.prefix') }}" data-user="{{ Auth::user()->id }}">
 
 {{-- scripts --}}
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{{ asset('/') }}/assets/js/jquery-3.5.1.min.js"></script>
 <script src="{{ asset('js/chatify/font.awesome.min.js') }}"></script>
-<script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.js"></script>
+<script src="{{ asset('js/fuse.js')}}"></script>
 <script src="{{ asset('js/chatify/autosize.js') }}"></script>
-<script src='https://unpkg.com/nprogress@0.2.0/nprogress.js'></script>
+<script src='{{ asset('js/nprogress.js') }}'></script>
 
 
 
@@ -157,21 +157,21 @@
 </script>
 
 {{-- styles --}}
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-<link rel='stylesheet' href='https://unpkg.com/nprogress@0.2.0/nprogress.css' />
+<!-- Bootstrap css-->
+<link rel="stylesheet" type="text/css" href="{{asset('/')}}/assets/css/vendors/bootstrap.css">
+<link rel='stylesheet' href="{{ asset('css/nprogress.css')}}" />
 <link href="{{ asset('css/chatify/style.css') }}" rel="stylesheet" />
 <link href="{{ asset('css/chatify/' . $dark_mode . '.mode.css') }}" rel="stylesheet" />
 <link href="{{ asset('css/emojionearea.css') }}" rel="stylesheet" />
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
 <link rel="stylesheet"
-    href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css"
-    integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
+    href="{{asset('css/bootstrap-material-design.min.css')}}" crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" href="{{ asset('/') }}/assets/css/vendors/font-awesome.css">
 <link rel="stylesheet" type="text/css"
     href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons">
 <link rel="stylesgeet"
-    href="https://rawgit.com/creativetimofficial/material-kit/master/assets/css/material-kit.css">
+    href="{{asset('css/material-kit.css')}}">
 <style>
   
 

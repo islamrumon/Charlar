@@ -1674,3 +1674,10 @@ function callingRequest(type) {
         },
     });
 }
+
+
+//group code start from here
+function createGroup(){
+    alert();
+}
+//group code end 
