@@ -1,5 +1,6 @@
 <script src="https://js.pusher.com/7.0.3/pusher.min.js"></script>
 <script>
+     "use strict"
     // Enable pusher logging - don't include this in production
     Pusher.logToConsole = true;
 
@@ -22,6 +23,7 @@
 </script>
 
 <script>
+    "use strict"
     /**
      *-------------------------------------------------------------
      * Global variables
@@ -303,36 +305,7 @@
             });
     }
 
-    /**
-     *-------------------------------------------------------------
-     * click and drag to scroll - function
-     *-------------------------------------------------------------
-     */
-    // function hScroller(scroller) {
-    //  const slider = document.querySelector(scroller);
-    //  let isDown = false;
-    //  let startX;
-    //  let scrollLeft;
-
-    //  slider.addEventListener("mousedown", (e) => {
-    //      isDown = true;
-    //      startX = e.pageX - slider.offsetLeft;
-    //      scrollLeft = slider.scrollLeft;
-    //  });
-    //  slider.addEventListener("mouseleave", () => {
-    //      isDown = false;
-    //  });
-    //  slider.addEventListener("mouseup", () => {
-    //      isDown = false;
-    //  });
-    //  slider.addEventListener("mousemove", (e) => {
-    //      if (!isDown) return;
-    //      e.preventDefault();
-    //      const x = e.pageX - slider.offsetLeft;
-    //      const walk = (x - startX) * 1;
-    //      slider.scrollLeft = scrollLeft - walk;
-    //  });
-    // }
+   
 
     /**
      *-------------------------------------------------------------
@@ -389,8 +362,7 @@
      * Fetch id data (user/group) and update the view
      *-------------------------------------------------------------
      */
-    function IDinfo(id, type) {
-        // alert('group id ' + id);
+    function IDinfo(id, type) {  
         // clear temporary message id
         temporaryMsgId = 0;
         // clear typing now
@@ -418,9 +390,6 @@
                     $(".info-profile").empty();
                     $(".info-profile").append(data.view);
 
-                    // $(".messenger-infoView")
-                    //     .find(".avatar")
-                    //     .css("background-image", 'url("' + data.user_avatar + '")');
                     $(".header-avatar").css(
                         "background-image",
                         'url("' + data.user_avatar + '")'
@@ -657,7 +626,7 @@
         console.log(data);
         console.log("messageing end");
         console.log("getMessengerId "+getMessengerId());
-        // && data.to_id == auth_id
+        
         if (data.group_id == getMessengerId() && data.from_id != auth_id) {
             $(".messages").find(".message-hint").remove();
             messagesContainer.find(".messages").append(data.message);
@@ -1316,7 +1285,7 @@
         });
 
         // make favorites card dragable on click to slide.
-        //  hScroller(".messenger-favorites");
+       
 
         // click action for list item [user/group]
         $("body").on("click", ".messenger-list-item", function() {

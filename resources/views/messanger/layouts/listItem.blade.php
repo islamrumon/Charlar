@@ -4,8 +4,8 @@
         <tr data-action="0">
             {{-- Avatar side --}}
             <td>
-            <div class="avatar av-m" style="background-color: #d9efff; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-                <span class="far fa-bookmark" style="font-size: 22px; color: #68a5ff;"></span>
+            <div class="avatar av-m avatar-dem">
+                <span class="far fa-bookmark bookmark-cl" ></span>
             </div>
             </td>
             {{-- center side --}}
@@ -23,7 +23,7 @@
 <table class="messenger-list-item" data-contact="{{ $user->id }}">
     <tr data-action="0">
         {{-- Avatar side --}}
-        <td style="position: relative">
+        <td class="td-relative">
             @if($user->active_status)
                 <span class="activeStatus"></span>
             @endif

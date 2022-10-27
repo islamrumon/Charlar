@@ -11,6 +11,8 @@
 
 {{-- scripts --}}
 <script src="{{ asset('/') }}/assets/js/jquery-3.5.1.min.js"></script>
+<script src="{{ asset('/') }}/assets/js/bootstrap/bootstrap.bundle.min.js"></script>
+<script src="{{ asset('/') }}/assets/js/bootstrap/popper.min.js"></script>
 <script src="{{ asset('js/chatify/font.awesome.min.js') }}"></script>
 <script src="{{ asset('js/fuse.js')}}"></script>
 <script src="{{ asset('js/chatify/autosize.js') }}"></script>
@@ -21,6 +23,7 @@
 
 
 <script>
+    "use strict"
   var big_image;
 
   $(document).ready(function() {

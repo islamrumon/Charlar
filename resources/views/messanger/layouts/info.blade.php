@@ -1,32 +1,4 @@
-{{-- user info and avatar --}}
-{{-- <div class="avatar av-l chatify-d-flex"></div>
-<p class="info-name">{{ config('chatify.name') }}</p>
-<div class="messenger-infoView-btns">
-    <a href="#" class="default"><i class="fas fa-camera"></i> default</a>
-    <a href="#" class="danger delete-conversation"><i class="fas fa-trash-alt"></i> Delete Conversation</a>
-</div> --}}
-{{-- shared photos --}}
-{{-- <div class="messenger-infoView-shared">
-    <nav>
-        <div class="nav nav-tabs nav-justified nav-pills profile-tab" id="nav-tab" role="tablist">
 
-            <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home"
-                type="button" role="tab" aria-controls="nav-home" aria-selected="true">Profile</button>
-
-            <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile"
-                type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Share Photos</button>
-        </div>
-    </nav>
-    <div class="tab-content" id="nav-tabContent">
-        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">...</div>
-
-        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-            <div class="shared-photos-list"></div>
-        </div>
-
-    </div>
-
-</div> --}}
 
 
 @php
@@ -99,28 +71,23 @@
             </div>
             <div class="row">
                 <div class="col-md-12 ml-auto mr-auto">
-                    <div class="profile-tabs">
-                        <ul class="nav nav-pills nav-pills-icons justify-content-center" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" href="#studio" role="tab" data-toggle="tab">
-                                    <img src="{{ filePath($user->avatar) }}" width="24px" height="24px">
-
-                                    profile
-                                </a>
+                    <div class="container">
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            
+                            <li class="nav-item active" role="presentation">
+                                <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact"
+                                    type="button" role="tab" aria-controls="contact" aria-selected="true">Profile</button>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#works" role="tab" data-toggle="tab">
-                                    <img src="{{ filePath('picture.png') }}" width="24px" height="24px">
-                                    Images
-                                </a>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link " id="home-tab" data-bs-toggle="tab" data-bs-target="#home"
+                                    type="button" role="tab" aria-controls="home" aria-selected="false">Images</button>
                             </li>
                             @if ($user->id == Auth::id())
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#profile" role="tab" data-toggle="tab">
-                                        <img src="{{ filePath('update_image.png') }}" width="24px" height="24px">
-                                        Update profile
-                                    </a>
-                                </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile"
+                                    type="button" role="tab" aria-controls="profile" aria-selected="false">Update profile
+                                    </button>
+                            </li>
                             @endif
 
                         </ul>
@@ -128,8 +95,9 @@
                 </div>
             </div>
 
-            <div class="tab-content tab-space">
-                <div class="tab-pane active text-center gallery" id="studio">
+            <div class="tab-content">
+                <div class="tab-pane fade gallery  show active" id="contact" role="tabpanel"
+                aria-labelledby="contact-tab">
 
 
 
@@ -190,11 +158,11 @@
                     </div>
                 </div>
 
-                <div class="tab-pane text-center gallery" id="works">
+                <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
                     <div class="shared-photos-list"></div>
                 </div>
                 @if ($user->id == Auth::id())
-                    <div class="tab-pane text-center gallery" id="profile">
+                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                         <div class="row">
                             <form method="post" action="{{ route('profile.update') }}"
                                 enctype="multipart/form-data">
@@ -346,7 +314,7 @@
                                 <button type="submit" class="btn btn-primary">Update Profile</button>
                             </form>
 
-                            </form>
+                       
                         </div>
                     </div>
                 @endif

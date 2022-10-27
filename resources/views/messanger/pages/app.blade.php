@@ -41,7 +41,7 @@
                     {!! view('messanger.layouts.listItem', ['get' => 'saved']) !!}
 
                     {{-- Contact --}}
-                    <div class="listOfContacts" style="width: 100%;height: calc(100% - 200px);position: relative;">
+                    <div class="listOfContacts">
                     </div>
 
                 </div>
@@ -69,7 +69,7 @@
                 <div class="chatify-d-flex chatify-justify-content-between chatify-align-items-center">
                     <a href="#" class="show-listView"><i class="fas fa-arrow-left"></i></a>
                     <div class="avatar av-s header-avatar"
-                        style=" margin: 0px 10px; margin-top: -5px; margin-bottom: -5px; background-image: url({{ filePath($auth->avatar) }})">
+                        style="background-image: url({{ filePath($auth->avatar) }})">
 
                     </div>
                     <a href="#" class="user-name">{{ $auth->name }}</a>

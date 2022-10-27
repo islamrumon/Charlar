@@ -1,15 +1,15 @@
 @php
     $calling = App\Models\GroupCalling::where('message_id', $id)->first();
-    //    $calling = false;
+   
 @endphp
 
 {{-- -------------------- The default card (white) -------------------- --}}
 @if ($viewType == 'default')
-    {{-- @if ($from_id != Auth::id()) --}}
+   
     <div class="message-card" data-id="{{ $id }}">
         <tr data-action="0">
             {{-- Avatar side --}}
-            <td style="position: relative">
+            <td class="td-relative">
                 <div class="avatar av-m" style="background-image: url('{{ filePath($from_avatar) }}');">
                 </div>
             </td>
@@ -54,10 +54,9 @@
 {{-- -------------------- Sender card (owner) -------------------- --}}
 @if ($viewType == 'sender')
     <div class="message-card mc-sender" title="{{ $fullTime }}" data-id="{{ $id }}">
-        <div class="chatify-d-flex chatify-align-items-center"
-            style="flex-direction: row-reverse; justify-content: flex-end;">
+        <div class="chatify-d-flex chatify-align-items-center chatify-d-flex-dsd">
             <i class="fas fa-trash chatify-hover-delete-btn" data-id="{{ $id }}"></i>
-            <p style="margin-left: 5px;">
+            <p class="ml-5">
                 @if (!empty($calling))
                     @if ($calling->type === 'video_call')
                         <i class="fas fa-video"></i> Video Call
@@ -80,8 +79,8 @@
         </div>
         {{-- If attachment is an image --}}
         @if (@$attachment[2] == 'image')
-            <div class="image-file chat-image"
-                style="margin-top:10px;width: 250px; height: 150px;background-image: url('{{ App\Http\ChatifyMessenger::getAttachmentUrl($attachment[0]) }}')">
+            <div class="image-file chat-image img-cls"
+                style="background-image: url('{{ App\Http\ChatifyMessenger::getAttachmentUrl($attachment[0]) }}')">
             </div>
         @endif
     </div>
