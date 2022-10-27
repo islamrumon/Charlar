@@ -15,9 +15,8 @@
             {{-- Search input --}}
             <input type="text" class="messenger-search" placeholder="Search" />
             {{-- Tabs --}}
-       
             <div class="messenger-listView-tabs">
-                <a href="{{ route(config('chatify.routes.prefix')) }}" @if (!Request::is('group/*') == 'user') class="active-tab" @endif data-view="users">
+                <a href="{{ route(config('chatify.routes.prefix')) }}"  data-view="users">
                     <span class="far fa-user"></span> People</a>
                 <a href="{{ route('group.messanger') }}" @if (Request::is('group/*')) class="active-tab" @endif data-view="groups">
                     <span class="fas fa-users"></span> Groups</a>
@@ -26,27 +25,20 @@
         {{-- tabs and lists --}}
         <div class="m-body contacts-container">
             {{-- Lists [Users/Group] --}}
-            {{-- ---------------- [ User Tab ] ---------------- --}}
            
-                <div class="@if ($type == 'user') show @endif messenger-tab users-tab app-scroll"
-                    data-view="users">
+            {{-- ---------------- [ Group Tab ] ---------------- --}}
+            <div class="show messenger-tab groups-tab app-scroll"
+                data-view="groups">
+                {{-- items --}}
+               <input type="hidden" id="groupCreate" value="{{route('group.create')}}">
+                <p style="text-align: center;margin-top:30px">
+                    <button class="btn btn-primary" style="color:{{ $messengerColor }}; !importent" onclick="createGroup()">Create new group</button>
+                </p>
 
-                    {{-- Favorites --}}
-                    <div class="favorites-section">
-                        <p class="messenger-title">Favorites</p>
-                        <div class="messenger-favorites app-scroll-thin"></div>
-                    </div>
-
-                    {{-- Saved Messages --}}
-                    {!! view('messanger.layouts.listItem', ['get' => 'saved']) !!}
-
-                    {{-- Contact --}}
-                    <div class="listOfContacts" style="width: 100%;height: calc(100% - 200px);position: relative;">
-                    </div>
-
-                </div>
-            
-           
+                {!! view('group.layouts.listItem', ['get' => 'saved']) !!}
+                 {{-- Contact --}}
+                 <div class="listOfContactsGroup" style="width: 100%;height: calc(100% - 200px);position: relative;"></div>
+            </div>
 
             {{-- ---------------- [ Search Tab ] ---------------- --}}
             <div class="messenger-tab search-tab app-scroll" data-view="search">
@@ -79,9 +71,8 @@
                     <input value="{{ route('send.call') }}" type="hidden" id="callingUrl">
                     <a href="#" class="video-call"><i class="fas fa-video"></i></a>
                     <a href="#" class="audio-call"><i class="fas fa-phone"></i></a>
-                    <a href="#" class="add-to-favorite"><i class="fas fa-star"></i></a>
 
-                    <a href="{{ route(config('chatify.routes.prefix')) }}"><i class="fas fa-home"></i></a>
+                    <a href="{{ route('group.messanger') }}"><i class="fas fa-home"></i></a>
                     <a href="#" class="show-infoSide"><i class="fas fa-info-circle"></i></a>
                 </nav>
             </nav>
@@ -111,7 +102,7 @@
                 </div>
             </div>
             {{-- Send Message Form --}}
-            @include('messanger.layouts.sendForm')
+            @include('group.layouts.sendForm')
         </div>
     </div>
     {{-- ---------------------- Info side ---------------------- --}}
@@ -121,10 +112,10 @@
             <a href="#"><i class="fas fa-times"></i></a>
         </nav>
         <div class="info-profile">
-            {!! view('messanger.layouts.info')->render() !!}
+            {!! view('group.layouts.info')->render() !!}
         </div>
     </div>
 </div>
 
-@include('messanger.layouts.modals')
-@include('messanger.layouts.footerLinks')
+@include('group.layouts.modals')
+@include('group.layouts.footerLinks')

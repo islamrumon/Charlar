@@ -245,14 +245,19 @@ function fileUploadWithName($file,  $name, $extention = 'js')
 
 function fileUpload($file, $folder, $name)
 {
-    if($file != null){
-        $imageName = Str::slug($name) . rendomForDigite() . '.' . $file->extension();
-        $file->move(public_path('uploads/' . $folder), $imageName);
-        $path = 'uploads/' . $folder . '/' . $imageName;
-        return $path;
-    }else{
+    try{
+        if($file != null){
+            $imageName = Str::slug($name) . rendomForDigite() . '.' . $file->extension();
+            $file->move(public_path('uploads/' . $folder), $imageName);
+            $path = 'uploads/' . $folder . '/' . $imageName;
+            return $path;
+        }else{
+            return Avatar::create($name)->toBase64();
+        }
+    }catch(Exception $e){
         return Avatar::create($name)->toBase64();
     }
+  
 }
 
 

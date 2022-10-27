@@ -21,3 +21,4 @@
     const getMaxUploadSize = {{ App\Http\ChatifyMessenger::getMaxUploadSize() }};
 </script>
 <script src="{{ asset('js/chatify/code.js') }}"></script>
+

@@ -1,15 +1,16 @@
-@include('messanger.layouts.headLinks')
+@include('group.layouts.headLinks')
 
 <div class="card">
     <div class="card-header">
         <h2 class="card-title">Create a new group</h2>
     </div>
     <div class="card-body">
-        <form>
+        <form action="{{route('group.store')}}" method="post" enctype="multipart/form-data">
+           @csrf
 
             <div class="form-group">
                 <label for="inputEmail4">Group Name <span class="text-danger">*</span> </label>
-                <input type="text" required class="form-control" id="inputEmail4" placeholder="Group name">
+                <input type="text" name="name" required class="form-control" id="inputEmail4" placeholder="Group name">
             </div>
 
             <div class="form-group">
@@ -17,6 +18,7 @@
                 <textarea name="about" class="form-control"></textarea>
 
             </div>
+            
             <div class="form-row">
                 <div class="form-group">
                     <label for="inputAddress2">Group Avatar</label>
@@ -36,5 +38,5 @@
 
 </div>
 
-@include('messanger.layouts.modals')
-@include('messanger.layouts.footerLinks')
+@include('group.layouts.modals')
+@include('group.layouts.footerLinks')

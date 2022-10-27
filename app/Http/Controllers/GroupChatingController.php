@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\ChatifyMessenger;
+use App\Models\ChFavorite;
 use App\Models\GroupChat;
+use App\Models\GroupParticipant;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,13 +15,14 @@ use Illuminate\Support\Facades\Response;
 class GroupChatingController extends Controller
 {
     //
-    
-    public function create()
+
+    public function create($id = null)
     {
-        return view('messanger.group.create',[
+
+        return view('group.create', [
             'auth' => Auth::user(),
             'id' => $id ?? 0,
-            'type' => $type ?? 'user',
+            'type' => 'group',
             'messengerColor' => Auth::user()->messenger_color ?? $this->messengerFallbackColor,
             'dark_mode' => Auth::user()->dark_mode < 1 ? 'light' : 'dark',
         ]);
@@ -27,25 +30,41 @@ class GroupChatingController extends Controller
 
     public function store(Request $request)
     {
+
         $request->validate([
-            'name'=>'required'
+            'name' => 'required'
         ]);
+
+        $auth = Auth::user();
         $group = new GroupChat();
         $group->name = $request->name;
-        $group->code = Str::slug($request->name).rendomForDigite();
+        $group->code = Str::slug($request->name) . rendomForDigite();
         $group->about = $request->about;
-        $group->admin_id = Auth::id();
-        $group->avatar = fileUpload($request->avatar,'groups',$request->name);
-        $group->cover = fileUpload($request->cover,'groups_cover',$request->name);
+        $group->admin_id = $auth->id;
+        $group->avatar = fileUpload($request->avatar, 'groups', $request->name);
+        $group->cover = fileUpload($request->cover, 'groups_cover', $request->name);
         $group->save();
 
-        //send own love 
+        $participant = new GroupParticipant();
+        $participant->group_id = $group->id;
+        $participant->user_id = $auth->id;
+        $participant->save();
 
-        return view('messanger.group.add_users');
+        return redirect()->route('add.users', routeValEncode($group->id));
+    }
+
+    public function addUser($id)
+    {
+        $groupId = $id;
+        $id = 0;
+        $type = 'group';
+        $messengerColor = Auth::user()->messenger_color ?? $this->messengerFallbackColor;
+        $dark_mode = Auth::user()->dark_mode < 1 ? 'light' : 'dark';
+        return view('group.add_users', compact('groupId',  'id', 'type', 'messengerColor', 'dark_mode'));
     }
 
 
-    public function addUsers(Request $request)
+    public function addUsersStore(Request $request)
     {
         return $request;
     }

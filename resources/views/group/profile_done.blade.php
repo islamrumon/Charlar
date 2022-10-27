@@ -783,8 +783,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            {{-- <input type="file" name="avatar" class="form-control" placeholder="Phone"
-                                        id="avatar"> --}}
                                         </div>
 
                                         <div class="form-group col-md-6">
@@ -802,9 +800,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-
-                                            {{-- <input type="file" name="cover" class="form-control" placeholder="Phone"
-                                        id="cover"> --}}
                                         </div>
                                     </div>
                                     <div class="form-group">

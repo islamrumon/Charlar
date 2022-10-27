@@ -67,7 +67,6 @@ function updateSelectedContact(user_id) {
  */
 // Loading svg
 function loadingSVG(size = "25px", className = "", style = "") {
-
     return `
 <svg style="${style}" class="loadingSVG ${className}" xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 40 40" stroke="#ffffff">
 <g fill="none" fill-rule="evenodd">
@@ -383,8 +382,8 @@ function IDinfo(id, type) {
             success: (data) => {
                 // avatar photo
                 console.log(data);
-                $('.info-profile').empty();
-                $('.info-profile').append(data.view);
+                $(".info-profile").empty();
+                $(".info-profile").append(data.view);
 
                 // $(".messenger-infoView")
                 //     .find(".avatar")
@@ -638,10 +637,7 @@ channel.bind("messaging", function (data) {
     if (data.calling == true && data.joinUrl != null) {
         window.open(data.joinUrl, "", "width=900");
     }
-   
 });
-
-
 
 // listen to typing indicator
 channel.bind("client-typing", function (data) {
@@ -752,9 +748,9 @@ function makeSeen(status) {
         method: "POST",
         data: { _token: access_token, id: getMessengerId() },
         dataType: "JSON",
-        success: data => {
+        success: (data) => {
             console.log("[seen] Messages seen - " + getMessengerId());
-        }
+        },
     });
     return channel.trigger("client-seen", {
         from_id: auth_id, // Me
@@ -997,6 +993,7 @@ let searchPage = 1;
 let noMoreDataSearch = false;
 let searchLoading = false;
 let searchTempVal = "";
+
 function setSearchLoading(loading = false) {
     if (!loading) {
         $(".search-records").find(".loading-search").remove();
@@ -1007,6 +1004,7 @@ function setSearchLoading(loading = false) {
     }
     searchLoading = loading;
 }
+
 function messengerSearch(input) {
     if (input != searchTempVal) {
         searchPage = 1;
@@ -1147,7 +1145,7 @@ function deleteMessage(id) {
  *-------------------------------------------------------------
  */
 function updateSettings() {
-    debugger
+    debugger;
     const formData = new FormData($("#update-settings")[0]);
     if (messengerColor) {
         formData.append("messengerColor", messengerColor);
@@ -1439,6 +1437,7 @@ $(document).ready(function () {
         $("#imageModalBox").show();
         $("#imageModalBoxSrc").attr("src", src);
     });
+
     $(".imageModal-close").on("click", function () {
         $("#imageModalBox").hide();
     });
@@ -1448,6 +1447,7 @@ $(document).ready(function () {
         $(".messenger-tab").hide();
         $('.messenger-tab[data-view="search"]').show();
     });
+
     $(".messenger-search").on("blur", function () {
         setTimeout(function () {
             $(".messenger-tab").hide();
@@ -1496,6 +1496,7 @@ $(document).ready(function () {
                 name: "delete",
             });
         });
+
     // delete modal [cancel button]
     $(".app-modal[data-name=delete]")
         .find(".app-modal-footer .cancel")
@@ -1531,6 +1532,7 @@ $(document).ready(function () {
             });
             cancelUpdatingAvatar();
         });
+
     // upload avatar on change
     $("body").on("change", ".upload-avatar", (e) => {
         // store the original avatar
@@ -1634,11 +1636,13 @@ function callingRequest(type) {
             messagesContainer
                 .find(".messages")
                 .append(sendTempMessageCard(type, tempID));
+
             // scroll to bottom
             scrollToBottom(messagesContainer);
             messageInput.css({ height: "72px" });
             // form reset and focus
             $("#message-form").trigger("reset");
+
             messageInput.focus();
         },
         success: (data) => {
@@ -1676,8 +1680,3 @@ function callingRequest(type) {
 }
 
 
-//group code start from here
-function createGroup(){
-    alert();
-}
-//group code end 

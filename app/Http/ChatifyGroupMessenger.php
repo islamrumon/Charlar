@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Exception;
 use Illuminate\Support\Facades\File;
 
-class ChatifyMessenger
+class ChatifyGroupMessenger
 {
     public $pusher;
 
@@ -237,7 +237,7 @@ class ChatifyMessenger
         // Get Unseen messages counter
         $unseenCounter = self::countUnseenMessages($user->id);
 
-        return view('messanger.layouts.listItem', [
+        return view('group.layouts.listItem', [
             'get' => 'users',
             'user' => self::getUserWithAvatar($user),
             'lastMessage' => $lastMessage,
