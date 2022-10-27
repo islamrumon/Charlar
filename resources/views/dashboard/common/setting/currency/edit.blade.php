@@ -41,7 +41,7 @@
     </div>
 
     <div class="float-right">
-        <button class="btn btn-primary" type="submit">@translate(Save)</button>
+        <button class="btn btn-primary mt-2" type="submit">@translate(Save)</button>
     </div>
 
 </form>

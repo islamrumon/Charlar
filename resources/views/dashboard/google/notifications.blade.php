@@ -1,13 +1,16 @@
 @extends('layouts.master')
 @section('title') @translate(Send Push Notification) @endsection
+@section('sub-title')
+    <a class="nav=link" href="{{ route('dashboard') }}">
+        @translate(Dashboard)
+    </a>
+@endsection
+
 @section('main-content')
     <div class="card ">
         <div class="card-header">
-            <div class="float-left">
-                <h2 class="card-title">@translate(Send Push Notification)</h2>
-            </div>
             <div class="float-right">
-                Recommended: 256x256 for image
+                @translate(Recommended: 256x256 for image)
             </div>
         </div>
 
@@ -21,17 +24,17 @@
                 </div>
 
                 <div class="form-group">
-                    <label>@translate(body) <span class="text-danger">*</span></label>
-                    <textarea name="body" class="form-control"></textarea>
+                    <label>@translate(Message ) <span class="text-danger">*</span></label>
+                    <textarea name="body" class="form-control" placeholder="Ex: today is 20% offer"></textarea>
 
                 </div>
 
-                <div class="form-group">
+                <div class="form-group mt-2">
                     <label>@translate(Image)</label>
-                    <input class="form-control-file" name="image" type="file" >
+                    <input class="form-control" name="image" type="file" >
                 </div>
 
-                <div class="float-right">
+                <div class="float-right mt-3">
                     <button class="btn btn-primary float-right" type="submit">@translate(Send)</button>
                 </div>
             </form>

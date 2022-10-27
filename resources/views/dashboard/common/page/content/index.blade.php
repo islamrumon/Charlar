@@ -4,8 +4,8 @@
 @endsection
 
 @section('sub-title')
-    <a  href="{{ route('pages.content.create', $id) }}">
-        @translate(Page content create)
+    <a href="{{ route('pages.index') }}">
+        @translate(Pages)
     </a>
 @endsection
 
@@ -26,7 +26,6 @@
                         <tr>
                             <th>@translate(S / L)</th>
                             <th>@translate(Title)</th>
-                            <th>@translate(Total Content)</th>
                             <th>@translate(Active)</th>
                             <th>@translate(Action)</th>
                         </tr>
@@ -36,37 +35,42 @@
                             <tr>
                                 <td>{{ $loop->index + 1 }}</td>
                                 <td>{{ $item->title }}</td>
+
                                 <td>
-                                    {!! $item->body !!}
-                                </td>
-                                <td>
-                                    <div class="form-group">
+                                    <div class="media">
+                                        <div class="media-body text-end">
+                                            <label class="switch" for="customSwitch{{ $item->id }}">
+                                                <input data-id="{{ $item->id }}" id="customSwitch{{ $item->id }}"
+                                                    {{ $item->active == true ? 'checked' : null }}
+                                                    data-url="{{ route('pages.content.active') }}" type="checkbox"> <span
+                                                    class="switch-state"></label>
 
-                                        <input data-id="{{ $item->id }}" {{ $item->active == true ? 'checked' : null }}
-                                            data-url="{{ route('pages.content.active') }}" type="checkbox"
-                                            class="js-switch-primary">
-
-
+                                        </div>
                                     </div>
+
                                 </td>
                                 <td>
-                                    <div class="btn-group mr-2">
+                                    <div class="dropdown-basic">
                                         <div class="dropdown">
-                                            <button class="btn btn-round btn-outline-primary" type="button"
-                                                id="CustomdropdownMenuButton5" data-toggle="dropdown" aria-haspopup="true"
-                                                aria-expanded="false"><i class="feather icon-more-vertical-"></i></button>
-                                            <div class="dropdown-menu" aria-labelledby="CustomdropdownMenuButton5"
-                                                x-placement="top-start">
-                                                <a class="dropdown-item" href="{{ route('pages.content.edit', $item->id) }}">
-                                                    <i class="feather icon-edit mr-2"></i>@translate(Content edit)</a>
+                                            <div class="btn-group mb-0">
+                                                <button class="dropbtn btn-primary btn-round"
+                                                    type="button">@translate(Action)
+                                                    <span></span></button>
+                                                <div class="dropdown-content">
 
-                                                <a class="dropdown-item" href="javascript:void(0)"
-                                                    onclick="confirm_modal('{{ route('pages.content.destroy', $item->id) }}')">
-                                                    <i class="feather icon-delete mr-2"></i>@translate(Delete)</a>
+                                                    <a
+                                                        href="{{ route('pages.content.edit', $item->id) }}">@translate(Content edit)</a>
 
+                                                    <a href="javascript:void(0)"
+                                                        onclick="confirm_modal('{{ route('pages.content.destroy', $item->id) }}')">
+                                                        @translate(Delete)</a>
+
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+
+
                                 </td>
                             </tr>
                         @empty

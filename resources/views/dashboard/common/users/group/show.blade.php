@@ -43,7 +43,7 @@
                                 <div class="mb-3 col-md-6">
                                         @foreach($group->permissions as $item)
                                         
-                                            <span class="badge badge-success">{{$item->name}}</span>,
+                                            <span class="badge badge-success">{{dashRemove($item->name)}}</span>
                                         @endforeach
                                 </div>
                             </div>

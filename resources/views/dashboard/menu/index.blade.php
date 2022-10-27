@@ -1,12 +1,12 @@
 @extends('layouts.master')
 @section('title')
-    @translate(Menu List)
+    @translate(Menu Builder)
 @endsection
 @section('meta-desc')
-    @translate(Menu List)
+    @translate(Menu Builder)
 @endsection
 @section('meta-keys')
-    @translate(Menu List)
+    @translate(Menu Builder)
 @endsection
 @section('style')
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -17,9 +17,6 @@
     <div class="contentbar">
         @if (!request()->has('menu') && empty(request()->input('menu')))
             <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">@translate(Menu Builder)</h3>
-                </div>
                 <!-- /.card-header -->
                 <div class="card-body p-2">
                     <!-- there are the main content-->
@@ -64,20 +61,8 @@
                                                 {{ $item->items->count() }}
                                             </td>
                                             <td>
-                                                <div class="dropdown-basic">
-                                                    <div class="dropdown">
-                                                        <div class="btn-group mb-0">
-                                                            <button class="dropbtn btn-primary btn-round"
-                                                                type="button">@translate(Action)
-                                                                <span><i class="fa fa-arrow-down"></i></span></button>
-                                                            <div class="dropdown-content">
-                                                                <a href="{{ url()->current() . '?menu=' . $item->id }}">
-                                                                    @translate(Menu items)</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
+                                                <a class="btn btn-primary" href="{{ url()->current() . '?menu=' . $item->id }}">
+                                                    @translate(Menu items)</a>
 
                                             </td>
                                         </tr>

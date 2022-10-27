@@ -1,10 +1,15 @@
 <?php
 
 use App\Http\Controllers\CommonController;
+use App\Http\Controllers\Dashboard\Blog\CategoryController;
+use App\Http\Controllers\Dashboard\Blog\PostController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\google\AnalyticsController;
 use App\Http\Controllers\Dashboard\MenuController;
 use App\Http\Controllers\Dashboard\SocialController;
+use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,6 +27,7 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
+Route::get('dark/mood', [CommonController::class, 'darkMood'])->name('dark');
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -41,7 +47,43 @@ Route::prefix('google')->name('google.')->group(function () {
 });
 
 
-Route::get('/clear', [CommonController::class, 'clearCash'])->name('clear.site');
+
+Route::get('/clear', [CommonController::class, 'clearCache'])->name('clear');
+//Clear Cache facade value:
+Route::get('/clear-cache', function () {
+    $exitCode = Artisan::call('cache:clear');
+    return '<h1>Cache facade value cleared</h1>';
+});
+
+//Reoptimized class loader:
+Route::get('/optimize', function () {
+    $exitCode = Artisan::call('optimize');
+    return '<h1>Reoptimized class loader</h1>';
+});
+
+//Route cache:
+Route::get('/route-cache', function () {
+    $exitCode = Artisan::call('route:cache');
+    return '<h1>Routes cached</h1>';
+});
+
+//Clear Route cache:
+Route::get('/route-clear', function () {
+    $exitCode = Artisan::call('route:clear');
+    return '<h1>Route cache cleared</h1>';
+});
+
+//Clear View cache:
+Route::get('/view-clear', function () {
+    $exitCode = Artisan::call('view:clear');
+    return '<h1>View cache cleared</h1>';
+});
+
+//Clear Config cache:
+Route::get('/config-cache', function () {
+    $exitCode = Artisan::call('config:cache');
+    return '<h1>Clear Config cleared</h1>';
+});
 
 
 Route::group(['middleware' => 'auth', 'prefix' => 'dashboard'], function () {
@@ -59,7 +101,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'dashboard'], function () {
     Route::post('user/update', [CommonController::class, 'userUpdate'])->name('users.update'); //->middleware('permissions:user_managment'); 
     Route::get('user/profile', [CommonController::class, 'userProfile'])->name('users.profile');
     Route::get('user/profile/{id}', [CommonController::class, 'userShow'])->name('users.show'); //->middleware('permissions:user_managment');
-    Route::get('user', [CommonController::class, 'userIndex'])->name('users.index'); //->middleware('permissions:user_managment');
+    Route::get('user/admin', [CommonController::class, 'userIndex'])->name('users.index'); //->middleware('permissions:user_managment');
+    Route::get('user/regular', [CommonController::class, 'userRegular'])->name('users.regular'); //->middleware('permissions:user_managment');
     Route::get('user/banned/{id}', [CommonController::class, 'userBanned'])->name('users.banned'); //->middleware('permissions:user_managment');
     Route::get('user/active/{id}', [CommonController::class, 'userActive'])->name('users.active');
     
@@ -102,17 +145,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'dashboard'], function () {
     Route::post('system/setting/update', [CommonController::class, 'systemSettingUpdate'])->name('system.update'); //->middleware('permissions:setting');
 
 
-    //Currency Setting
-    Route::get('currency', [CommonController::class, 'currencyIndex'])->name('currencies.index'); //->middleware('permissions:currency_setup');
-    Route::get('currency/create', [CommonController::class, 'currencyCreate'])->name('currencies.create'); //->middleware('permissions:currency_setup');
-    Route::post('currency/store', [CommonController::class, 'currencyStore'])->name('currencies.store'); //->middleware('permissions:currency_setup');
-    Route::get('currency/delete/{id}', [CommonController::class, 'currencyDestroy'])->name('currencies.destroy'); //->middleware('permissions:currency_setup');
-    Route::get('currency/edit/{id}', [CommonController::class, 'currencyEdit'])->name('currencies.edit'); //->middleware('permissions:currency_setup');
-    Route::post('currency/update', [CommonController::class, 'currencyUpdate'])->name('currencies.update'); //->middleware('permissions:currency_setup');
-    Route::post('currency/default', [CommonController::class, 'currencyDefault'])->name('currencies.default');
-    Route::get('currency/published', [CommonController::class, 'currencyAlignment'])->name('currencies.published');
-    Route::get('currency/align', [CommonController::class, 'currencyAlignment'])->name('currencies.align');
-
+  
 
 
     //all pages
@@ -136,20 +169,6 @@ Route::group(['middleware' => 'auth', 'prefix' => 'dashboard'], function () {
     Route::get('pages/content/edit/{id}', [CommonController::class, 'contentEdit'])->name('pages.content.edit'); //->middleware('permissions:page_managment');
     Route::post('pages/content/update', [CommonController::class, 'contentUpdate'])->name('pages.content.update'); //->middleware('permissions:page_managment');
     Route::get('pages/content/delete/{id}', [CommonController::class, 'contentDestroy'])->name('pages.content.destroy'); //->middleware('permissions:page_managment');
-
-
-    //Category
-    Route::get('category/create', [CommonController::class, 'categoryCreate'])->name('categories.create'); //->middleware('permissions:category_managment');
-    Route::post('category/store', [CommonController::class, 'categoryStore'])->name('categories.store'); //->middleware('permissions:category_managment');
-    Route::get('category/edit/{id}', [CommonController::class, 'categoryEdit'])->name('categories.edit'); //->middleware('permissions:category_managment');
-    Route::post('category/update', [CommonController::class, 'categoryUpdate'])->name('categories.update'); //->middleware('permissions:category_managment');
-    Route::get('category/destroy/{id}', [CommonController::class, 'categoryDestroy'])->name('categories.destroy'); //->middleware('permissions:category_managment');
-    Route::get('category', [CommonController::class, 'categoryIndex'])->name('categories.index'); //->middleware('permissions:category_managment');
-
-    //this route for published or unpublished
-    Route::get('category/published', [CommonController::class, 'categoryPublished'])->name('categories.published'); //->middleware('permissions:category_managment');
-    Route::get('category/popular', [CommonController::class, 'categoryPopular'])->name('categories.popular'); //->middleware('permissions:category_managment');
-    Route::get('category/top', [CommonController::class, 'categoryTop'])->name('categories.top'); //->middleware('permissions:category_managment');
 
 
 
@@ -254,6 +273,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'dashboard'], function () {
     // link
     Route::get('links', [CommonController::class, 'links'])->name('urls');
 
+    Route::get('users/profile',[HomeController::class,'usersProfile'])->name('profile.user');
+    Route::get('chat/group',[HomeController::class,'chatGroups'])->name('chat.group');
     
     
 });

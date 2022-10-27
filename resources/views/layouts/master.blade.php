@@ -8,7 +8,8 @@
     @yield('style')
 </head>
 
-<body>
+<body class="{{Cookie::get('darkmood')}}-only">
+    <input type="hidden" id="darkRoute" value="{{route('dark')}}">
     <!-- Loader starts-->
     @include('layouts.include.loader')
     <!-- Loader ends-->
@@ -55,7 +56,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12 footer-copyright text-center">
-                            <p class="mb-0">Copyright 2022 © Zeta theme by pixelstrap </p>
+                            <p class="mb-0"> @translate(Copyright) {{date("Y")}} © {{getSystemSetting('type_footer')}} </p>
                         </div>
                     </div>
                 </div>

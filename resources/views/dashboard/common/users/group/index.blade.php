@@ -27,10 +27,10 @@
                         @foreach ($groups as $item)
                             <tr>
                                 <td> {{ $loop->index + 1 }}</td>
-                                <td>{{ Str::ucfirst($item->name) }}</td>
+                                <td>{{ dashRemove($item->name) }}</td>
                                 <td>
                                     @foreach ($item->permissions as $items)
-                                        <span class="badge badge-success">{{ $items->name }}</span>,
+                                        <span class="badge badge-success">{{ dashRemove($items->name)  }}</span>
                                     @endforeach
                                 </td>
                                 <td>
@@ -39,7 +39,7 @@
                                             <div class="btn-group mb-0">
                                                 <button class="dropbtn btn-primary btn-round"
                                                     type="button">@translate(Action)
-                                                    <span><i class="fa fa-arrow-down"></i></span></button>
+                                                    <span></span></button>
                                                 <div class="dropdown-content">
                                                     <a href="{{ route('groups.edit', $item->id) }}">
                                                         @translate(Edit)</a>

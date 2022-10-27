@@ -33,7 +33,7 @@
                         @foreach($permissions as $item)
                         <tr>
                             <td> {{$loop->index+1}}</td>
-                            <td>@translate(Name) : {{$item->name}} <br> @translate(Slug) : {{$item->slug}}</td>
+                            <td>@translate(Name) : {{$item->name}}</td>
 
                             <td>
                                 <div class="btn-group">

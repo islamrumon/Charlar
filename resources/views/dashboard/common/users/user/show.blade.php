@@ -64,7 +64,7 @@
                                 <select class="form-control select2 w-100" name="group_id[]" multiple readonly>
                                     @foreach ($user->groups as $item)
                                         <option value="{{ $item->id }}" selected>
-                                            {{ $item->name }}</option>
+                                            {{ dashRemove($item->name)  }}</option>
                                     @endforeach
                                 </select>
                             </div>

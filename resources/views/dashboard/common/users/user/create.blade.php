@@ -17,7 +17,7 @@
                 <div class="col-xl-8">
                     <div class="card">
                         <div class="card-header pb-0">
-                            <h4 class="card-title mb-0">@translate(Prinary Information)</h4>
+                            <h4 class="card-title mb-0">@translate(Primary Information)</h4>
                             <div class="card-options"><a class="card-options-collapse" href="#"
                                     data-bs-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a><a
                                     class="card-options-remove" href="#" data-bs-toggle="card-remove"><i
@@ -60,6 +60,7 @@
                                         <option selected value="">--@translate(Select)--</option>
                                         <option value="admin">@translate(Admin)</option>
                                         <option value="user">@translate(User)</option>
+                                        <option value="agent">@translate(Agent)</option>
 
                                     </select>
                                 </div>
@@ -86,7 +87,7 @@
                                     <label class="form-label">@translate(Select Roles)</label>
                                     <select class="form-control select2-multi w-100" name="group_id[]" multiple>
                                         @foreach ($groups as $item)
-                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                            <option value="{{ $item->id }}">{{ dashRemove($item->name) }}</option>
                                         @endforeach
                                     </select>
                                 </div>

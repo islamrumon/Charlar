@@ -67,7 +67,7 @@ $currentUrl = url()->current();
                                             </div>
                                         </div>
                                         <div class="clear"></div>
-                                        <div class="card  border border-primary mb-3">
+                                        <div class="card  border border-primary mb-3 d-none">
                                             <div class="card-header">
                                                 <h5 class="card-title">Select another options</h5>
                                             </div>
@@ -119,7 +119,7 @@ $currentUrl = url()->current();
                                             </div>
                                         </div>
                                         <div class="clear"></div>
-                                        <div class="card  border border-primary mb-3">
+                                        <div class="card  border border-primary mb-3 d-none">
                                             <div class="card-header">
                                                 <h5 class="card-title">Select Brands</h5>
                                             </div>

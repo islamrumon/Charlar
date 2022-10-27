@@ -35,7 +35,7 @@
                         <div class="form-group row">
                             <label class="col-md-4 col-form-label text-md-right">@translate(Description)</label>
                             <div class="mb-3 col-md-6">
-                                <textarea class="textarea sr-textarea" name="description" placeholder="@translate(Place some text here)" ></textarea>
+                                <textarea class="editable form-control" name="description" placeholder="@translate(Place some text here)" ></textarea>
                             </div>
                         </div>
 

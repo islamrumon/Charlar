@@ -1,16 +1,12 @@
 @extends('layouts.master')
 @section('title') @translate(Firebase Setup) @endsection
+@section('sub-title')
+    <a class="nav=link" href="{{ route('dashboard') }}">
+        @translate(Dashboard)
+    </a>
+@endsection
 @section('main-content')
     <div class="card ">
-        <div class="card-header">
-            <div class="float-left">
-                <h2 class="card-title">@translate(Firebase Setup)</h2>
-            </div>
-            <div class="float-right">
-
-            </div>
-        </div>
-
         <div class="card-body">
             <form action="{{route('google.firebase.store')}}" method="post" enctype="multipart/form-data">
                 @csrf

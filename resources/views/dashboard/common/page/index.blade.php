@@ -29,6 +29,7 @@
                             <th>@translate(S / L)</th>
 
                             <th>@translate(Title)</th>
+                            <th>@translate(Widgets)</th>
                             <th>@translate(Total Content)</th>
                             <th>@translate(Published)</th>
                             <th>@translate(Authorize)</th>
@@ -39,8 +40,26 @@
                         @forelse($pages as  $item)
                             <tr>
                                 <td>{{ $loop->index + 1 }}</td>
-                                <td>{{ checkNull($item->title) }} <br>
-                                    {{-- <span> Url: {{ route('page', $item->slug) }}</span> --}}
+
+                                <td>
+                                    <strong> {{ checkNull($item->title) }} </strong> <br>
+                                    <span> Url: <a
+                                            href="{{ route('page', $item->slug) }}">{{ route('page', $item->slug) }}</a></span>
+                                </td>
+
+                                <td>
+                                    @if ($item->widgets != null)
+                                        @foreach (config('widgets') as $key => $value)
+                                            @foreach (json_decode($item->widgets) as $item1)
+                                                @if ($key == $item1)
+                                                    <p>{{ $value }}</p>
+                                                @endif
+                                            @endforeach
+                                        @endforeach
+                                    @endif
+
+
+
                                 </td>
                                 <td>
                                     {{ $item->content->count() ?? 'N/A' }}
@@ -49,10 +68,10 @@
                                     <div class="media">
                                         <div class="media-body text-end">
                                             <label class="switch" for="customSwitch{{ $item->id }}">
-                                            <input data-id="{{ $item->id }}" id="customSwitch{{ $item->id }}"
-                                                {{ $item->active == true ? 'checked' : null }}
-                                                data-url="{{ route('pages.active') }}" type="checkbox"
-                                                > <span class="switch-state"></label>
+                                                <input data-id="{{ $item->id }}" id="customSwitch{{ $item->id }}"
+                                                    {{ $item->active == true ? 'checked' : null }}
+                                                    data-url="{{ route('pages.active') }}" type="checkbox"> <span
+                                                    class="switch-state"></label>
 
                                         </div>
                                     </div>
@@ -61,14 +80,14 @@
                                     <div class="media">
                                         <div class="media-body text-end">
                                             <label class="switch" for="is_authorize{{ $item->id }}">
-                                        <input data-id="{{ $item->id }}" id="is_authorize{{ $item->id }}"
-                                            {{ $item->is_authorize == true ? 'checked' : null }}
-                                            data-url="{{ route('pages.authorize') }}" type="checkbox"
-                                            ><span class="switch-state"></label>
+                                                <input data-id="{{ $item->id }}" id="is_authorize{{ $item->id }}"
+                                                    {{ $item->is_authorize == true ? 'checked' : null }}
+                                                    data-url="{{ route('pages.authorize') }}" type="checkbox"><span
+                                                    class="switch-state"></label>
 
-                                            </div>
                                         </div>
                                     </div>
+
                                 </td>
                                 <td>
                                     <div class="dropdown-basic">
@@ -76,15 +95,17 @@
                                             <div class="btn-group mb-0">
                                                 <button class="dropbtn btn-primary btn-round"
                                                     type="button">@translate(Action)
-                                                    <span><i class="fa fa-arrow-down"></i></span></button>
+                                                    <span></span></button>
                                                 <div class="dropdown-content">
-                                                    <a href="javascript:void(0)" onclick="forModal('{{ route('pages.edit', $item->id) }}','@translate(Page Edit)')">@translate(Edit)</a>
+                                                    <a href="javascript:void(0)"
+                                                        onclick="forModal('{{ route('pages.edit', $item->id) }}','@translate(Page Edit)')">@translate(Edit)</a>
 
-                                                <a href="{{ route('pages.content.index', $item->id) }}">@translate(Page Content)</a>
+                                                    <a
+                                                        href="{{ route('pages.content.index', $item->id) }}">@translate(Page Content)</a>
 
-                                                <a href="javascript:void(0)"
-                                                    onclick="confirm_modal('{{ route('pages.destroy', $item->id) }}')">
-                                                    @translate(Delete)</a>
+                                                    <a href="javascript:void(0)"
+                                                        onclick="confirm_modal('{{ route('pages.destroy', $item->id) }}')">
+                                                        @translate(Delete)</a>
 
                                                 </div>
                                             </div>

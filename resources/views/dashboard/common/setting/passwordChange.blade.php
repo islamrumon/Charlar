@@ -5,7 +5,7 @@
 
         <div class="card m-2">
             <div class="card-header">
-                <h2 class="card-title">@translate(Update Your.update)</h2>
+                <h2 class="card-title">@translate(Update Your Password)</h2>
             </div>
             <div class="card-body">
                 <form method="post" action="{{ route('change.password.update') }}" enctype="multipart/form-data">

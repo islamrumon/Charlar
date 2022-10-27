@@ -1,12 +1,14 @@
 @extends('layouts.master')
 @section('title')
-    @translate(User List)
+    {{$title}}
 @endsection
 
 @section('sub-title')
-    <a href="{{ route('users.create') }}">
-        @translate(Add New User)
-    </a>
+    @can('user-create')
+        <a href="{{ route('users.create') }}">
+            @translate(Add New User)
+        </a>
+    @endcan
 @endsection
 @section('main-content')
     <!-- Container-fluid starts-->
@@ -21,7 +23,7 @@
                             <th>@translate(Avatar)</th>
                             <th>@translate(Name)</th>
                             <th>@translate(Contact)</th>
-                            <th>@translate(Groups)</th>
+                        
                             <th>@translate(Last Login)</th>
                             <th>@translate(Action)</th>
                         </tr>
@@ -42,14 +44,7 @@
                                         class="text-info">{{ checkNull($item->email) }}</a><br>
                                     @translate(Phone) : <a href="Tel:{{ checkNull($item->phone) }}"
                                         class="text-info">{{ checkNull($item->phone) }}</a>
-                                <td>
-
-
-                                    @foreach ($item->groups as $it)
-                                        <span class="badge badge-success">{{ $it->name }}</span>,
-                                    @endforeach
-
-                                </td>
+                               
                                 <td>
                                     @if ($item->login_time != null)
                                         <span class="badge badge-info">{{ timeForHumans($item->login_time) }}</span>
@@ -61,7 +56,7 @@
                                             <div class="btn-group mb-0">
                                                 <button class="dropbtn btn-primary btn-round"
                                                     type="button">@translate(Action)
-                                                    <span><i class="fa fa-arrow-down"></i></span></button>
+                                                    <span></span></button>
                                                 <div class="dropdown-content">
                                                     @if (Auth::id() == $item->id)
                                                         <a href="{{ route('users.profile') }}">@translate(My Profile)</a>
@@ -69,9 +64,10 @@
                                                     @endif
 
                                                     @if (Auth::id() != $item->id)
-                                                        <a
-                                                            href="{{ route('users.show', routeValEncode($item->id)) }}">@translate(Profile)</a>
-
+                                                        @can('user-profile')
+                                                            <a
+                                                                href="{{ route('users.show', routeValEncode($item->id)) }}">@translate(Profile)</a>
+                                                        @endcan
                                                         @if ($item->banned)
                                                             <a href="#" class="text-success"
                                                                 onclick="confirm_modal('{{ route('users.active', routeValEncode($item->id)) }}')">@translate(Active)</a>
@@ -80,18 +76,21 @@
                                                                 onclick="confirm_modal('{{ route('users.banned', routeValEncode($item->id)) }}')">@translate(Banned)</a>
                                                         @endif
                                                     @endif
-                                                    <a href="{{ route('users.edit', routeValEncode($item->id)) }}">@translate(Update Profile)</a>
-
+                                                    @can('user-update')
+                                                        <a
+                                                            href="{{ route('users.edit', routeValEncode($item->id)) }}">@translate(Update Profile)</a>
+                                                    @endcan
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    
+
                                 </td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
+                {{$users->links()}}
             </div>
         </div>
     </div>

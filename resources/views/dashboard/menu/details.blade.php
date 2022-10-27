@@ -441,7 +441,7 @@
                                         <div class="btn-group mb-0">
                                             <button class="dropbtn btn-primary btn-round"
                                                 type="button">@translate(Action)
-                                                <span><i class="fa fa-arrow-down"></i></span></button>
+                                                <span></span></button>
                                             <div class="dropdown-content">
                                                 <a class="dropdown-item"
                                                     href="{{ route('menu.item.edit', $item->id) }}">

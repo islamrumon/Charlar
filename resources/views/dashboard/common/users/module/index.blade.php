@@ -8,7 +8,7 @@
 @section('main-content')
     <div class="contentbar">
         <div class="row">
-            <div class="col-md-7 col-sm-12">
+            <div class="col-md-12 col-sm-12">
                 <div class="card">
                     <div class="card-header">
                         <h2 class="card-title">@translate(Permission List)</h2>
@@ -18,10 +18,10 @@
                         <table class="table data-table">
                             <thead>
                                 <tr>
-                                    <th>@translate(S / L)</th>
+                                    <th>@translate(S/L)</th>
                                     <th>@translate(Name)</th>
                                     <th>@translate(Permissions)</th>
-                                    <th>@translate(Action)</th>
+                                    <th class="d-none">@translate(Action)</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -29,25 +29,25 @@
                                 @foreach ($modules as $item)
                                     <tr>
                                         <td>{{ $loop->index + 1 }}</td>
-                                        <td>{{ checkNull($item->name) }}</td>
+                                        <td>{{ dashRemove($item->name) }}</td>
                                         <td>
                                             {{-- {{$item->permissions}} --}}
                                             @forelse($item->permissions as $permission)
                                                 @if ($permission->permission != null)
-                                                    <snap class="badge badge-info">{{ $permission->permission->name }}</snap>
+                                                    <span class="badge badge-info">{{ dashRemove($permission->permission->name) }}</span>
                                                 @endif
 
                                             @empty
                                                 <span class="badge badge-danger">@translate(No permission)</span>
                                             @endforelse
                                         </td>
-                                        <td>
+                                        <td class="">
                                             <div class="dropdown-basic">
                                                 <div class="dropdown">
                                                     <div class="btn-group mb-0">
                                                         <button class="dropbtn btn-primary btn-round"
                                                             type="button">@translate(Action)
-                                                            <span><i class="fa fa-arrow-down"></i></span></button>
+                                                            <span></span></button>
                                                         <div class="dropdown-content">
                                                             <a href="javascript:void(0)"
                                                                 onclick="forModal('{{ route('modules.edit', $item->id) }}','Module permission edit')">@translate(Edit)</a>
@@ -71,7 +71,7 @@
                 </div>
 
             </div>
-            <div class="col-md-5 col-sm-12">
+            <div class="col-md-5 col-sm-12 d-none">
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">@translate(Permission Group Setup)</h3>

@@ -11,7 +11,7 @@
 
 @section('main-content')
     <!-- Container-fluid starts-->
-    <div class="container-fluid card">
+    <div class="container-fluid card p-5">
         <div class="edit-profile">
             <form action="{{ route('groups.store') }}" method="post">
                 @csrf
@@ -35,12 +35,12 @@
                         <div class="row">
                             @forelse($modules as $m)
                                 <div class="col-md-4 card p-5 b-l-primary">
-                                    <h2 class="card-title py-2">@translate(Module): {{ $m->name }}</h2>
+                                    <h2 class="card-title py-2">@translate(Module): {{dashRemove($m->name) }}</h2>
                                     @foreach ($m->permissions as $item)
                                         @if ($item->permission != null)
                                             <div class="media">
                                                 <label
-                                                    class="col-form-label">{{ Str::ucfirst($item->permission->name) }}</label>
+                                                    class="col-form-label">{{ dashRemove($item->permission->name) }}</label>
                                                 <div class="media-body text-end">
                                                     <label class="switch" for="customSwitch{{ $item->id }}">
                                                         <input type="checkbox" value="{{ $item->permission->name }}"

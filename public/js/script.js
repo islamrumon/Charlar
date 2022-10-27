@@ -35,6 +35,22 @@ $('input[type="checkbox"]').change(function () {
     }
 });
 
+// theme dark mood
+$(".mode").on("click", function () {
+    var url = $("#darkRoute").val();
+    $.ajax({
+        url: url,
+        method: "get",
+        success: function (result) {
+            console.log(result);
+        },
+    });
+    $(".mode").toggleClass("dark");
+    $("body").toggleClass("dark-only");
+    var color = $(this).attr("data-attr");
+    localStorage.setItem("body", "dark-only");
+});
+
 //show the modal in this function
 function forModal(url, message) {
     $("#show-modal").modal("show");

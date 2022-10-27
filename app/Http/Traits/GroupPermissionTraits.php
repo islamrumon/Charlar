@@ -23,11 +23,18 @@ trait GroupPermissionTraits
     //users
     public function userIndex()
     {
-        $users = User::where('type', 'admin')->with('groups')->get();
-
-        return view('dashboard.common.users.user.index')->with('users', $users);
+        $users = User::where('type', 'admin')->paginate(20);
+        $title = "Admin Users";
+        return view('dashboard.common.users.user.index',compact('users','title'));
+    }
+    public function userRegular()
+    {
+        $users = User::where('type', 'user')->latest()->paginate(20);
+        $title = "Users";
+        return view('dashboard.common.users.user.index',compact('users','title'));
     }
 
+    
     public function userCreate()
     {
         $groups = Group::all();

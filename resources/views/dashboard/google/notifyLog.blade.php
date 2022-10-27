@@ -1,16 +1,14 @@
 @extends('layouts.master')
 @section('title') @translate(Push Notification logs) @endsection
+
+@section('sub-title')
+    <a class="nav=link" href="{{ route('dashboard') }}">
+        @translate(Dashboard)
+    </a>
+@endsection
+
 @section('main-content')
     <div class="card ">
-        <div class="card-header">
-            <div class="float-left">
-                <h2 class="card-title">@translate(Push Notification logs)</h2>
-            </div>
-            <div class="float-right">
-
-            </div>
-        </div>
-
         <div class="card-body">
             <!-- there are the main content-->
             <table id="datatable" class="table table-striped- table-bordered table-hover text-center">

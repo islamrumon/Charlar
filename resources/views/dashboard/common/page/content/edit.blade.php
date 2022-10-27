@@ -32,7 +32,7 @@
                     <div class="form-group">
                         <h4 class="col-form-label" >
                             @translate(Content Description)</h4>
-                        <textarea class="form-control @error('body') is-invalid @enderror" name="body" rows="5">{{ $content->body }}</textarea>
+                        <textarea   class="editable form-control @error('body') is-invalid @enderror" name="body" rows="5">@pureme($content->body)</textarea>
                         @error('body')
                             <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
                         @enderror

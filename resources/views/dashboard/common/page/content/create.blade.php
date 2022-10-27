@@ -30,7 +30,7 @@
                 <div class="form-group">
                     <label class="col-form-label" for="val-suggestions">
                         @translate(Content Description)</label>
-                    <textarea  class="form-control @error('body') is-invalid @enderror" name="body" rows="5">{{ old('body') }}</textarea>
+                    <textarea  class="editabled form-control @error('body') is-invalid @enderror" name="body" rows="5">{{ old('body') }}</textarea>
                     @error('body')
                         <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
                     @enderror

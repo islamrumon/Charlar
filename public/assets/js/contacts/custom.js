@@ -1,3 +1,4 @@
+"use strict"
 function submitContact() {
 	if ($("#bookmark-form").valid()) {
 		var index_var = $('#index_var').val();

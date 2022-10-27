@@ -23,7 +23,7 @@
                         <div class="card-body">
                             <form action="{{ route('user.update.first') }}" method="post" enctype="multipart/form-data">
                                 @csrf
-                                <input type="hidden" name="id" value="{{routeValEncode($user->id)}}">
+                                <input type="hidden" name="id" value="{{ routeValEncode($user->id) }}">
                                 <div class="row mb-2">
                                     <div class="profile-title">
                                         <div class="media"> <img class="img-70 rounded-circle" alt="{{ $user->name }}"
@@ -75,6 +75,8 @@
                                         <option value="user" {{ $user->type == 'user' ? 'selected' : null }}>
                                             @translate(User)</option>
 
+                                        <option value="agent" {{ $user->type == 'agent' ? 'selected' : null }}>
+                                            @translate(Agent)</option>
                                     </select>
                                 </div>
 
@@ -84,7 +86,7 @@
                                         @foreach ($groups as $item)
                                             <option value="{{ $item->id }}"
                                                 @foreach ($user->groups as $item1) {{ $item1->id == $item->id ? 'selected' : null }} @endforeach>
-                                                {{ $item->name }}</option>
+                                                {{ dashRemove($item->name) }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -97,9 +99,9 @@
                     </div>
                 </div>
                 <div class="col-xl-8">
-                    <form class="card" action="{{route('users.update')}}" method="post">
+                    <form class="card" action="{{ route('users.update') }}" method="post">
                         @csrf
-                        <input type="hidden" name="id" value="{{routeValEncode($user->id)}}">
+                        <input type="hidden" name="id" value="{{ routeValEncode($user->id) }}">
                         <div class="card-header pb-0">
                             <h4 class="card-title mb-0">@translate(Others Information)</h4>
                             <div class="card-options"><a class="card-options-collapse" href="#"
@@ -112,56 +114,57 @@
                                 <div class="col-sm-6 col-md-4">
                                     <div class="mb-3">
                                         <label class="form-label">@translate(Designation)</label>
-                                        <input class="form-control" type="text" value="{{$user->designation}}" name="designation"
-                                            placeholder="@translate(Designation)">
+                                        <input class="form-control" type="text" value="{{ $user->designation }}"
+                                            name="designation" placeholder="@translate(Designation)">
                                     </div>
                                 </div>
                                 <div class="col-sm-6 col-md-4">
                                     <div class="mb-3">
                                         <label class="form-label">@translate(Contact Number)</label>
-                                        <input class="form-control" type="tel" name="phone" value="{{$user->phone}}"
-                                            placeholder="@translate(Contact number)">
+                                        <input class="form-control" type="tel" name="phone"
+                                            value="{{ $user->phone }}" placeholder="@translate(Contact number)">
                                     </div>
                                 </div>
                                 <div class="col-sm-6 col-md-4">
                                     <div class="mb-3">
                                         <label class="form-label">@translate(First Name)</label>
-                                        <input class="form-control" type="text" name="f_name" value="{{$user->f_name}}"
-                                            placeholder="@translate(First Name)">
+                                        <input class="form-control" type="text" name="f_name"
+                                            value="{{ $user->f_name }}" placeholder="@translate(First Name)">
                                     </div>
                                 </div>
                                 <div class="col-sm-6 col-md-4">
                                     <div class="mb-3">
                                         <label class="form-label">@translate(Last Name)</label>
-                                        <input class="form-control" type="text" name="l_name" value="{{$user->l_name}}"
-                                            placeholder="@translate(Last Name)">
+                                        <input class="form-control" type="text" name="l_name"
+                                            value="{{ $user->l_name }}" placeholder="@translate(Last Name)">
                                     </div>
                                 </div>
                                 <div class="col-md-8">
                                     <div class="mb-3">
                                         <label class="form-label">@translate(Address)</label>
-                                        <input class="form-control" type="text" name="address" value="{{$user->address}}"
-                                            placeholder="@translate(Home Address)">
+                                        <input class="form-control" type="text" name="address"
+                                            value="{{ $user->address }}" placeholder="@translate(Home Address)">
                                     </div>
                                 </div>
                                 <div class="col-sm-6 col-md-6">
                                     <div class="mb-3">
                                         <label class="form-label">@translate(City)</label>
-                                        <input class="form-control" type="text" name="city" value="{{$user->city}}"
-                                            placeholder="@translate(City)">
+                                        <input class="form-control" type="text" name="city"
+                                            value="{{ $user->city }}" placeholder="@translate(City)">
                                     </div>
                                 </div>
                                 <div class="col-sm-6 col-md-6">
                                     <div class="mb-3">
                                         <label class="form-label">@translate(State)</label>
-                                        <input class="form-control" type="number" name="state" value="{{$user->state}}"
-                                            placeholder="@translate(State)">
+                                        <input class="form-control" type="number" name="state"
+                                            value="{{ $user->state }}" placeholder="@translate(State)">
                                     </div>
                                 </div>
                                 <div class="col-sm-6 col-md-6">
                                     <div class="mb-3">
                                         <label class="form-label">@translate(Website)</label>
-                                        <input class="form-control" name="website" placeholder="http://Uplor .com" value="{{$user->website}}">
+                                        <input class="form-control" name="website" placeholder="http://Uplor .com"
+                                            value="{{ $user->website }}">
                                     </div>
                                 </div>
                                 <div class="col-sm-6 col-md-6">
@@ -169,9 +172,12 @@
                                         <label class="form-label">@translate(Gender)</label>
                                         <select class="form-control btn-square" name="genders">
                                             <option selected value="">--@translate(Select)--</option>
-                                            <option value="Male" {{$user->genders == 'Male' ? 'selected' : null}}>@translate(Male)</option>
-                                            <option value="Female"  {{$user->genders == 'Female' ? 'selected' : null}}>@translate(Female)</option>
-                                            <option value="Other"  {{$user->genders == 'Other' ? 'selected' : null}}>@translate(Other)</option>
+                                            <option value="Male" {{ $user->genders == 'Male' ? 'selected' : null }}>
+                                                @translate(Male)</option>
+                                            <option value="Female" {{ $user->genders == 'Female' ? 'selected' : null }}>
+                                                @translate(Female)</option>
+                                            <option value="Other" {{ $user->genders == 'Other' ? 'selected' : null }}>
+                                                @translate(Other)</option>
                                         </select>
                                     </div>
                                 </div>
@@ -192,5 +198,4 @@
             </div>
         </div>
     </div>
-
 @endsection

@@ -1,16 +1,14 @@
 @extends('layouts.master')
 @section('title') @translate(Google analytics CMS Setup) @endsection
+@section('sub-title')
+    <a class="nav=link" href="{{ route('dashboard') }}">
+        @translate(Dashboard)
+    </a>
+@endsection
+
 @section('main-content')
+<div class="container-fluid">
     <div class="card ">
-        <div class="card-header">
-            <div class="float-left">
-                <h2 class="card-title">@translate(Google analytics setup)</h2>
-            </div>
-            <div class="float-right">
-
-            </div>
-        </div>
-
         <div class="card-body">
             <form action="{{route('google.analytics.store')}}" method="post" enctype="multipart/form-data">
                 @csrf
@@ -59,6 +57,7 @@
             </form>
         </div>
     </div>
+</div>
 @endsection
 
 

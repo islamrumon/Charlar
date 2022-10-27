@@ -12,8 +12,8 @@
 @section('main-content')
 
     <div class="container-fluid">
-        <div class="card">
-            <div class="card-body p-2">
+        <div class="card p-5">
+            <div class="card-body">
                 <form action="{{ route('groups.update') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="id" value="{{ $group->id }}" />
@@ -21,7 +21,7 @@
                     <div class="mb-3">
                         <h4 class="form-label">@translate(Name) <span class="text-danger">*</span></h4>
                         <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
-                            name="name" value="{{ $group->name }}" required placeholder="@translate(Enter the role name here)" autofocus>
+                            name="name" value="{{ dashRemove($group->name) }}" required placeholder="@translate(Enter the role name here)" autofocus>
                         @error('name')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -40,12 +40,12 @@
                             <div class="row">
                                 @forelse($modules as $m)
                                     <div class="col-md-4 card p-5">
-                                        <h2 class="card-title py-2">@translate(Module): {{ Str::ucfirst($m->name) }}</h2>
+                                        <h2 class="card-title py-2">@translate(Module): {{ dashRemove($m->name) }}</h2>
                                         @foreach ($m->permissions as $item)
                                             @if ($item->permission != null)
                                                 <div class="media">
                                                     <label
-                                                        class="col-form-label">{{ Str::ucfirst($item->permission->name) }}</label>
+                                                        class="col-form-label">{{ dashRemove($item->permission->name) }}</label>
                                                     <div class="media-body text-end">
                                                         <label class="switch" for="customSwitch{{ $item->id }}">
                                                             <input type="checkbox"

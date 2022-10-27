@@ -1,4 +1,5 @@
 
+"use strict"
 function submitBookMark() {
     if ($(".form-bookmark").valid()) {
 	var index_var = $('#index_var').val();

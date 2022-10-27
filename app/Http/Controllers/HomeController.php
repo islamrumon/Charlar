@@ -57,4 +57,16 @@ class HomeController extends Controller
         // }
        
     }
+
+    public function usersProfile()
+    {
+        //liveware show
+        return view('dashboard.home.profiles');
+    }
+
+    public function chatGroups()
+    {
+        //liveware show
+        return view('dashboard.home.chatGroup');
+    }
 }

@@ -66,7 +66,7 @@
 
                 <a class="btn m-2 {{ Request::url() == route('language.type.translate', [$lang->id, 'plane_title']) ? 'btn-success' : 'btn-primary' }}"
                     href="{{ route('language.type.translate', [$lang->id, 'plane_title']) }}">
-                    @translate(Plane title)
+                    @translate(Plan title)
                 </a>
                 <a class="btn m-2 {{ Request::url() == route('language.type.translate', [$lang->id, 'price_condition_title']) ? 'btn-success' : 'btn-primary' }}"
                     href="{{ route('language.type.translate', [$lang->id, 'price_condition_title']) }}">

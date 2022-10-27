@@ -1,16 +1,13 @@
 @extends('layouts.master')
 @section('title') @translate(Push Notification) @endsection
+
+@section('sub-title')
+    <a class="nav=link" href="{{ route('dashboard') }}">
+        @translate(Dashboard)
+    </a>
+@endsection
 @section('main-content')
     <div class="card ">
-        <div class="card-header">
-            <div class="float-left">
-                <h2 class="card-title">@translate(Push Notification)</h2>
-            </div>
-            <div class="float-right">
-
-            </div>
-        </div>
-
         <div class="card-body">
             <form action="{{route('google.push.store')}}" method="post" enctype="multipart/form-data">
                 @csrf
@@ -56,7 +53,7 @@
     <div class="card">
           <div class="card-header">
             <div class="float-left">
-                <h2 class="card-title">@translate(Copy this script), @translate(and create a js file and past the code and update this new created script), @translate(if you face any problem contact us) </h2>
+                <h2 class="card-title">@translate(Copy this script, create a js file and past the code and update this newly created script, if you face any problems contact us) </h2>
             </div>
             <div class="float-right">
 
