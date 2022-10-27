@@ -28,6 +28,7 @@
 
 </div> --}}
 
+
 @php
     if (!isset($user)) {
         $user = Auth::user();

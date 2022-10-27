@@ -3,16 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\ChMessage as Message;
-use App\Models\ChFavorite as Favorite;
 use App\Http\ChatifyGroupMessenger as Chatify;
 use App\Models\GroupChat;
+use App\Models\GroupMessage;
 use App\Models\GroupParticipant;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request as FacadesRequest;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use Junges\ACL\Contracts\Group;
 
 class GroupMessagnerController extends Controller
@@ -26,27 +26,27 @@ class GroupMessagnerController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    // public function pusherAuth(Request $request)
-    // {
-    //     // Auth data
-    //     $authData = json_encode([
-    //         'user_id' => Auth::user()->id,
-    //         'user_info' => [
-    //             'name' => Auth::user()->name
-    //         ]
-    //     ]);
-    //     // check if user authorized
-    //     if (Auth::check()) {
-    //         $verify = new Chatify();
-    //         return $verify->pusherAuth(
-    //             $request['channel_name'],
-    //             $request['socket_id'],
-    //             $authData
-    //         );
-    //     }
-    //     // if not authorized
-    //     return response()->json(['message' => 'Unauthorized'], 401);
-    // }
+    public function pusherAuth(Request $request)
+    {
+        // Auth data
+        $authData = json_encode([
+            'user_id' => Auth::user()->id,
+            'user_info' => [
+                'name' => Auth::user()->name
+            ]
+        ]);
+        // check if user authorized
+        if (Auth::check()) {
+            $verify = new Chatify();
+            return $verify->pusherAuth(
+                $request['channel_name'],
+                $request['socket_id'],
+                $authData
+            );
+        }
+        // if not authorized
+        return response()->json(['message' => 'Unauthorized'], 401);
+    }
 
     /**
      * Returning the view of the app with the required data.
@@ -56,10 +56,13 @@ class GroupMessagnerController extends Controller
      */
     public function index($id = null)
     {
+        //here id is group id
         $routeName = FacadesRequest::route()->getName();
         $type = in_array($routeName, ['user', 'group'])
             ? $routeName
             : 'user';
+
+
 
         return view('group.pages.app', [
             'auth' => Auth::user(),
@@ -80,22 +83,23 @@ class GroupMessagnerController extends Controller
     public function idFetchData(Request $request)
     {
         // Favorite
-        $favorite = Chatify::inFavorite($request['id']);
+        // $favorite = Chatify::inFavorite($request['id']);
+        $favorite = 0;
 
-        // User data
-        if ($request['type'] == 'user') {
-            $user = User::where('id', $request['id'])->first();
-            if ($user) {
-                $userAvatar = filePath($user->avatar);
-            }
+        // group data
+        $group = GroupChat::where('id', $request['id'])->first();
+        if ($group) {
+            $userAvatar = filePath($group->avatar);
         }
-        $view = view('group.layouts.info', compact('user'))->render();
+        $ids = GroupParticipant::where('group_id', $request['id'])->pluck('user_id');
+        $users = User::whereIn('id', $ids)->get()->shuffle();
+        $view = view('group.layouts.info', compact('group','users'))->render();
 
         // send the response
         return Response::json([
             'favorite' => $favorite,
             'view' => $view,
-            'fetch' => $user ?? [],
+            'fetch' => $group ?? [],
             'user_avatar' => $userAvatar ?? null,
         ]);
     }
@@ -124,6 +128,9 @@ class GroupMessagnerController extends Controller
      */
     public function send(Request $request)
     {
+
+
+
 
         // default variables
         $error = (object)[
@@ -168,7 +175,7 @@ class GroupMessagnerController extends Controller
                 'type' => $request['type'],
                 'from_id' => Auth::user()->id,
                 'message_type' => 'text',
-                'to_id' => $request['id'],
+                'group_id' => (int)$request['id'],
                 'body' => htmlentities(trim($request['message']), ENT_QUOTES, 'UTF-8'),
                 'attachment' => ($attachment) ? json_encode((object)[
                     'new_name' => $attachment,
@@ -181,9 +188,9 @@ class GroupMessagnerController extends Controller
 
             // send to user using pusher
             $chat = new Chatify();
-            $chat->push('private-chatify', 'messaging', [
+            $chat->push('private-chatify', 'group-messaging', [
                 'from_id' => Auth::user()->id,
-                'to_id' => $request['id'],
+                'group_id' => (int)$request['id'],
                 'calling' => false,
                 'message' => Chatify::messageCard($messageData, 'default')
             ]);
@@ -265,33 +272,16 @@ class GroupMessagnerController extends Controller
      */
     public function getContacts(Request $request)
     {
-        // return $request;
-        // get all users that received/sent message from/to [Auth user]
-        // $users = Message::join('users',  function ($join) {
-        //     $join->on('ch_messages.from_id', '=', 'users.id')
-        //         ->orOn('ch_messages.to_id', '=', 'users.id');
-        // })
-        //     ->where(function ($q) {
-        //         $q->where('ch_messages.from_id', Auth::user()->id)
-        //             ->orWhere('ch_messages.to_id', Auth::user()->id);
-        //     })
-        //     ->where('users.id', '!=', Auth::user()->id)
-        //     ->select('users.*', DB::raw('MAX(ch_messages.created_at) max_created_at'))
-        //     ->orderBy('max_created_at', 'desc')
-        //     ->groupBy('users.id')
-        //     ->paginate($request->per_page ?? $this->perPage);
-
-        // $usersList = $users->items();
-
+        
         //groups
-        $groups = GroupParticipant::where('user_id',Auth::id())->pluck('group_id');
+        $addGroup = GroupParticipant::where('user_id', Auth::id())->pluck('group_id');
 
-        $users = GroupChat::whereIn('id',$groups)->get();
+        $groups = GroupChat::whereIn('id', $addGroup)->get()->shuffle();
 
-        if (count($users) > 0) {
+        if (count($groups) > 0) {
             $contacts = '';
-            foreach ($users as $user) {
-                $contacts .= Chatify::getContactItem($user);
+            foreach ($groups as $item) {
+                $contacts .= Chatify::getContactItem($item);
             }
         } else {
             $contacts = '<p class="message-hint center-el"><span>Your contact list is empty</span></p>';
@@ -299,9 +289,11 @@ class GroupMessagnerController extends Controller
 
         return Response::json([
             'contacts' => $contacts,
-            'total' => $users->total() ?? 0,
-            'last_page' => $users->lastPage() ?? 1,
+            'total' => 0,
+            'last_page' =>  10,
         ], 200);
+
+       
     }
 
     /**
@@ -313,13 +305,22 @@ class GroupMessagnerController extends Controller
     public function updateContactItem(Request $request)
     {
         // Get user data
-        $user = User::where('id', $request['user_id'])->first();
-        if (!$user) {
+        // $user = User::where('id', $request['user_id'])->first();
+        // if (!$user) {
+        //     return Response::json([
+        //         'message' => 'User not found!',
+        //     ], 401);
+        // }
+        // $contactItem = Chatify::getContactItem($user);
+
+        //get the group
+        $group = GroupChat::where('id', $request['group_id'])->first();
+        if (!$group) {
             return Response::json([
-                'message' => 'User not found!',
+                'message' => 'Group not found!',
             ], 401);
         }
-        $contactItem = Chatify::getContactItem($user);
+        $contactItem = Chatify::getContactItem($group);
 
         // send the response
         return Response::json([
@@ -327,21 +328,6 @@ class GroupMessagnerController extends Controller
         ], 200);
     }
 
-    /**
-     * Put a user in the favorites list
-     *
-     * @param Request $request
-     * @return JsonResponse|void
-     */
- 
-
-    /**
-     * Get favorites list
-     *
-     * @param Request $request
-     * @return JsonResponse|void
-     */
-   
 
     /**
      * Search in messenger
@@ -351,13 +337,13 @@ class GroupMessagnerController extends Controller
      */
     public function search(Request $request)
     {
-        $addGroups = GroupParticipant::where('user_id',Auth::id())->pluck('group_id');
-    
+        // $addGroups = GroupParticipant::where('user_id',Auth::id())->pluck('group_id');
+
 
         $getRecords = null;
         $input = trim(filter_var($request['input']));
-        $records = GroupChat::whereNotIn('id', $addGroups)
-            ->where('name', 'LIKE', "%{$input}%")
+        // $records = GroupChat::whereNotIn('id', $addGroups)
+        $records = GroupChat::where('name', 'LIKE', "%{$input}%")
             ->paginate($request->per_page ?? $this->perPage);
         foreach ($records->items() as $record) {
             $getRecords .= view('group.layouts.listItem', [
@@ -385,7 +371,7 @@ class GroupMessagnerController extends Controller
      */
     public function sharedPhotos(Request $request)
     {
-        $shared = Chatify::getSharedPhotos($request['user_id']);
+        $shared = Chatify::getSharedPhotos($request['group_id']);
         $sharedPhotos = null;
 
         // shared with its template
@@ -462,14 +448,13 @@ class GroupMessagnerController extends Controller
             // check file size
             if ($file->getSize() < Chatify::getMaxUploadSize()) {
                 if (in_array(strtolower($file->getClientOriginalExtension()), $allowed_images)) {
-                    if($request->file('avatar')){
+                    if ($request->file('avatar')) {
                         $user  = User::where('id', Auth::user()->id)->first();
-                        $avatar = fileUpload($request->avatar,'user', $user->user);
+                        $avatar = fileUpload($request->avatar, 'user', $user->user);
                         $user->avatar = $avatar;
                         $user->save();
-            
                     }
-                   
+
                     $success = $user ? 1 : 0;
                 } else {
                     $msg = "File extension not allowed!";

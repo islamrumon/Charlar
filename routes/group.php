@@ -28,17 +28,17 @@ Route::post('profile/update',[HomeController::class,'profileUpdate'])->name('pro
 /**
  *  Fetch info for specific id [user/group]
  */
-Route::post('/idInfo', [GroupMessagnerController::class,'idFetchData']);
+Route::post('/idInfo', [GroupMessagnerController::class,'idFetchData'])->name('group.info');
 
 /**
  * Send message route
  */
-Route::post('/sendMessage',[GroupMessagnerController::class,'send'])->name('send.message');
-Route::post('/sendCall',[CallingController::class,'sendcallingRequest'])->name('send.call');
-Route::get('/join/{id}',[CallingController::class,'joinCalling'])->name('join.call');
+Route::post('/sendMessage',[GroupMessagnerController::class,'send'])->name('group.send.message');
+Route::post('/sendCall',[CallingController::class,'groupSendcallingRequest'])->name('group.send.call');
+Route::get('/join/{messageId}/{groupId}',[CallingController::class,'groupJoinCalling'])->name('group.join.call');
 // Route::get('/join/request/{id}',[CallingController::class,'joinRequest'])->name('join.request.modal');
-Route::get('start/call/{id}',[CallingController::class,'startCall'])->name('start.call');
-Route::get('end/call/{id}',[CallingController::class,'endCall'])->name('end.call');
+Route::get('start/call/{id}',[CallingController::class,'groupStartCall'])->name('group.start.call');
+Route::get('end/call/{id}',[CallingController::class,'groupEndCall'])->name('group.end.call');
 /**
  * Fetch messages
  */
@@ -53,7 +53,7 @@ Route::get('/download/{fileName}',[GroupMessagnerController::class,'download'])-
 /**
  * Make messages as seen
  */
-Route::post('/makeSeen', [GroupMessagnerController::class,'seen'])->name('messages.seen');
+Route::post('/makeSeen', [GroupMessagnerController::class,'seen'])->name('group.messages.seen');
 
 /**
  * Get contacts
@@ -76,7 +76,7 @@ Route::get('/search', [GroupMessagnerController::class,'search'])->name('group.s
 /**
  * Get shared photos
  */
-Route::post('/shared', [GroupMessagnerController::class,'sharedPhotos'])->name('shared');
+Route::post('/shared', [GroupMessagnerController::class,'sharedPhotos'])->name('group.file.shared');
 
 /**
  * Delete Conversation
@@ -126,4 +126,5 @@ Route::get('/{id}', [GroupMessagnerController::class,'index'])->name('user');
 Route::get('create',[GroupChatingController::class,'create'])->name('group.create');
 Route::post('store',[GroupChatingController::class,'store'])->name('group.store');
 Route::get('add/user/{id}',[GroupChatingController::class,'addUser'])->name('add.users');
+Route::get('remove/from/group/{id}/{userId}',[GroupChatingController::class,'removeFormGroup'])->name('remove.from.group');
 // Route::post('add/users',[GroupChatingController::class,'addUser'])->name('add.users');

@@ -5,12 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class GroupMessage extends Model
+class GroupCalling extends Model
 {
     use HasFactory;
-
-    public function from()
-    {
-        return $this->hasOne(User::class,'id','from_id');
-    }
 }

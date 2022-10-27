@@ -1,4 +1,4 @@
-@include('messanger.layouts.headLinks')
+@include('group.layouts.headLinks')
 <div class="messenger">
     {{-- ----------------------Users/Groups lists side---------------------- --}}
     <div class="messenger-listView">
@@ -16,9 +16,10 @@
             <input type="text" class="messenger-search" placeholder="Search" />
             {{-- Tabs --}}
             <div class="messenger-listView-tabs">
-                <a href="{{ route(config('chatify.routes.prefix')) }}"  data-view="users">
+                <a href="{{ route(config('chatify.routes.prefix')) }}">
                     <span class="far fa-user"></span> People</a>
-                <a href="{{ route('group.messanger') }}" @if (Request::is('group/*')) class="active-tab" @endif data-view="groups">
+
+                <a href="{{ route('group.messanger') }}" @if (Request::is('group/*')) class="active-tab" @endif data-view="users">
                     <span class="fas fa-users"></span> Groups</a>
             </div>
         </div>
@@ -28,16 +29,17 @@
            
             {{-- ---------------- [ Group Tab ] ---------------- --}}
             <div class="show messenger-tab groups-tab app-scroll"
-                data-view="groups">
+                data-view="users">
                 {{-- items --}}
                <input type="hidden" id="groupCreate" value="{{route('group.create')}}">
-                <p style="text-align: center;margin-top:30px">
-                    <button class="btn btn-primary" style="color:{{ $messengerColor }}; !importent" onclick="createGroup()">Create new group</button>
-                </p>
+               {{-- onclick="createGroup()" --}}
+                <div class="g-create-div">
+                    <button class="btn btn-light group-create-btn" style="color:{{ $messengerColor }}; !importent" >Create new group</button>
+                </div>
 
                 {!! view('group.layouts.listItem', ['get' => 'saved']) !!}
                  {{-- Contact --}}
-                 <div class="listOfContactsGroup" style="width: 100%;height: calc(100% - 200px);position: relative;"></div>
+                 <div class="listOfContactsGroup"></div>
             </div>
 
             {{-- ---------------- [ Search Tab ] ---------------- --}}
@@ -60,15 +62,15 @@
                 {{-- header back button, avatar and user name --}}
                 <div class="chatify-d-flex chatify-justify-content-between chatify-align-items-center">
                     <a href="#" class="show-listView"><i class="fas fa-arrow-left"></i></a>
-                    <div class="avatar av-s header-avatar"
-                        style=" margin: 0px 10px; margin-top: -5px; margin-bottom: -5px; background-image: url({{ filePath($auth->avatar) }})">
+                    <div class="avatar av-s header-avatar avatar-extra"
+                        style="background-image: url({{ filePath($auth->avatar) }})">
 
                     </div>
                     <a href="#" class="user-name">{{ $auth->name }}</a>
                 </div>
                 {{-- header buttons --}}
                 <nav class="m-header-right">
-                    <input value="{{ route('send.call') }}" type="hidden" id="callingUrl">
+                    <input value="{{ route('group.send.call') }}" type="hidden" id="callingUrl">
                     <a href="#" class="video-call"><i class="fas fa-video"></i></a>
                     <a href="#" class="audio-call"><i class="fas fa-phone"></i></a>
 

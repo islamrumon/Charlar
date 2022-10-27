@@ -50,7 +50,8 @@ class GroupChatingController extends Controller
         $participant->user_id = $auth->id;
         $participant->save();
 
-        return redirect()->route('add.users', routeValEncode($group->id));
+        $url = route('group.messanger').'/'.$group->id;
+        return redirect()->to($url);
     }
 
     public function addUser($id)
@@ -94,5 +95,15 @@ class GroupChatingController extends Controller
             'total' => $records->total(),
             'last_page' => $records->lastPage()
         ], 200);
+    }
+
+    public function removeFormGroup($id,$userId)
+    {
+        
+        $group = GroupParticipant::where('group_id',$id)->where('user_id',$userId)->first();
+        if($group){
+            $group->delete();
+        } 
+        return response()->json(['id'=>$userId],200);
     }
 }

@@ -3,14 +3,15 @@
 namespace App\Http;
 
 use App\Models\Calling;
-use App\Models\ChMessage as Message;
-use App\Models\ChFavorite as Favorite;
+
+use App\Models\GroupMessage;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use Pusher\Pusher;
 use Illuminate\Support\Facades\Auth;
 use Exception;
 use Illuminate\Support\Facades\File;
+use Junges\ACL\Contracts\Group;
 
 class ChatifyGroupMessenger
 {
@@ -106,7 +107,7 @@ class ChatifyGroupMessenger
         $attachment_type = null;
         $attachment_title = null;
 
-        $msg = Message::where('id', $id)->first();
+        $msg = GroupMessage::where('id', $id)->first();
         if (!$msg) {
             return [];
         }
@@ -119,12 +120,14 @@ class ChatifyGroupMessenger
             $ext = pathinfo($attachment, PATHINFO_EXTENSION);
             $attachment_type = in_array($ext, self::getAllowedImages()) ? 'image' : 'file';
         }
-    
+
         return [
             'index' => $index,
             'id' => $msg->id,
+            'from_avatar' => $msg->from->avatar,
+            'from_name' => $msg->from->name,
             'from_id' => $msg->from_id,
-            'to_id' => $msg->to_id,
+            'group_id' => $msg->group_id,
             'message' => $msg->body,
             'attachment' => [$attachment, $attachment_title, $attachment_type],
             'time' => $msg->created_at->diffForHumans(),
@@ -147,7 +150,7 @@ class ChatifyGroupMessenger
             return '';
         }
         $data['viewType'] = ($viewType) ? $viewType : $data['viewType'];
-        return view('messanger.layouts.messageCard', $data)->render();
+        return view('group.layouts.messageCard', $data)->render();
     }
 
     /**
@@ -156,10 +159,9 @@ class ChatifyGroupMessenger
      * @param int $user_id
      * @return Message|\Illuminate\Database\Eloquent\Builder
      */
-    public static function fetchMessagesQuery($user_id)
+    public static function fetchMessagesQuery($group_id)
     {
-        return Message::where('from_id', Auth::user()->id)->where('to_id', $user_id)
-            ->orWhere('from_id', $user_id)->where('to_id', Auth::user()->id);
+        return GroupMessage::where('group_id', $group_id);
     }
 
     /**
@@ -170,11 +172,11 @@ class ChatifyGroupMessenger
      */
     public static function newMessage($data)
     {
-        $message = new Message();
+        $message = new GroupMessage();
         $message->id = $data['id'];
         $message->type = $data['type'];
         $message->from_id = $data['from_id'];
-        $message->to_id = $data['to_id'];
+        $message->group_id = $data['group_id'];
         $message->body = $data['body'];
         $message->attachment = $data['attachment'];
         $message->message_type = $data['message_type'];
@@ -190,10 +192,9 @@ class ChatifyGroupMessenger
      * @param int $user_id
      * @return bool
      */
-    public static function makeSeen($user_id)
+    public static function makeSeen($group_id)
     {
-        Message::Where('from_id', $user_id)
-            ->where('to_id', Auth::user()->id)
+        GroupMessage::Where('group_id', $group_id)
             ->where('seen', 0)
             ->update(['seen' => 1]);
         return 1;
@@ -205,9 +206,9 @@ class ChatifyGroupMessenger
      * @param int $user_id
      * @return Message|Collection|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|object|null
      */
-    public static function getLastMessageQuery($user_id)
+    public static function getLastMessageQuery($group_id)
     {
-        return self::fetchMessagesQuery($user_id)->latest()->first();
+        return self::fetchMessagesQuery($group_id)->latest()->first();
     }
 
     /**
@@ -216,9 +217,9 @@ class ChatifyGroupMessenger
      * @param int $user_id
      * @return Collection
      */
-    public  static function countUnseenMessages($user_id)
+    public  static function countUnseenMessages($group_id)
     {
-        return Message::where('from_id', $user_id)->where('to_id', Auth::user()->id)->where('seen', 0)->count();
+        return GroupMessage::where('group_id', $group_id)->where('seen', 0)->count();
     }
 
     /**
@@ -229,23 +230,23 @@ class ChatifyGroupMessenger
      * @param Collection $user
      * @return string
      */
-    public static function getContactItem($user)
+    public static function getContactItem($group)
     {
         // get last message
-        $lastMessage = self::getLastMessageQuery($user->id);
+        $lastMessage = self::getLastMessageQuery($group->id);
 
         // Get Unseen messages counter
-        $unseenCounter = self::countUnseenMessages($user->id);
+        $unseenCounter = self::countUnseenMessages($group->id);
 
         return view('group.layouts.listItem', [
             'get' => 'users',
-            'user' => self::getUserWithAvatar($user),
+            'user' => self::getUserWithAvatar($group),
             'lastMessage' => $lastMessage,
             'unseenCounter' => $unseenCounter,
         ])->render();
     }
 
-  
+
 
     /**
      * Get user with avatar (formatted).
@@ -253,18 +254,18 @@ class ChatifyGroupMessenger
      * @param Collection $user
      * @return Collection
      */
-    public static function getUserWithAvatar($user)
+    public static function getUserWithAvatar($group)
     {
-        $user->avatar = filePath($user->avatar);
-        return  $user;
-        if ($user->avatar == 'avatar.png' && config('chatify.gravatar.enabled')) {
+        $group->avatar = filePath($group->avatar);
+        return  $group;
+        if ($group->avatar == 'avatar.png' && config('chatify.gravatar.enabled')) {
             $imageSize = config('chatify.gravatar.image_size');
             $imageset = config('chatify.gravatar.imageset');
-            $user->avatar = 'https://www.gravatar.com/avatar/' . md5(strtolower(trim($user->email))) . '?s=' . $imageSize . '&d=' . $imageset;
+            $group->avatar = 'https://www.gravatar.com/avatar/' . md5(strtolower(trim($group->email))) . '?s=' . $imageSize . '&d=' . $imageset;
         } else {
-            $user->avatar = self::getUserAvatarUrl($user->avatar);
+            $group->avatar = self::getUserAvatarUrl($group->avatar);
         }
-        return $user;
+        return $group;
     }
 
     /**
@@ -275,9 +276,7 @@ class ChatifyGroupMessenger
      */
     public static function inFavorite($user_id)
     {
-        return Favorite::where('user_id', Auth::user()->id)
-            ->where('favorite_id', $user_id)->count() > 0
-            ? true : false;
+        return true;
     }
 
     /**
@@ -289,19 +288,8 @@ class ChatifyGroupMessenger
      */
     public static function makeInFavorite($user_id, $action)
     {
-        if ($action > 0) {
-            // Star
-            $star = new Favorite();
-            $star->id = rand(9, 99999999);
-            $star->user_id = Auth::user()->id;
-            $star->favorite_id = $user_id;
-            $star->save();
-            return $star ? true : false;
-        } else {
-            // UnStar
-            $star = Favorite::where('user_id', Auth::user()->id)->where('favorite_id', $user_id)->delete();
-            return $star ? true : false;
-        }
+        return true;
+       
     }
 
     /**
@@ -362,7 +350,7 @@ class ChatifyGroupMessenger
     public static function deleteMessage($id)
     {
         try {
-            $msg = Message::findOrFail($id);
+            $msg = GroupMessage::findOrFail($id);
             if ($msg->from_id == auth()->id()) {
                 // delete file attached if exist
                 if (isset($msg->attachment)) {
@@ -427,7 +415,7 @@ class ChatifyGroupMessenger
         // Get Unseen messages counter
         $unseenCounter = self::countUnseenMessages($user->id);
 
-        return view('messanger.layouts.listItem_group', [
+        return view('group.layouts.listItem', [
             'get' => 'users',
             'user' => self::getUserWithAvatar($user),
             'lastMessage' => $lastMessage,

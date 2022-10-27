@@ -19,9 +19,10 @@ class GroupMemberAdd extends Component
     public $recordss;
 
 
-    public function mount($id)
+    public function mount($id = null)
     {
-        $this->group =  GroupChat::findOrFail(routeValDecode($id));
+        $this->group =  GroupChat::find(routeValDecode($id));
+       
      
     }
 
@@ -44,22 +45,23 @@ class GroupMemberAdd extends Component
     public function render()
     {
 
-        $d = GroupParticipant::where('group_id', $this->group->id)
+        if($this->group != null){
+            $d = GroupParticipant::where('group_id', $this->group->id)
             ->pluck('user_id');
+
         if ($this->search != null) {
             $records = User::whereNotIn('id', $d)
                 ->where('name', 'LIKE', "%{$this->search}%")
                 ->where('email', 'LIKE', "%{$this->search}%")
                 ->paginate(40);
         } else {
-
-            // $fav= ChFavorite::where('user_id', Auth::id())->pluck('favorite_id');
-            // $records = User::whereNotIn('id', $d)->where('id',$fav)->get();
             $records = User::whereNotIn('id', $d)->latest()->get();
-
         }
-
-
+    
+        }else{
+            $records = User::all()->shuffle()->take(20);
+        }
+        
         return view('livewire.group-member-add', compact('records'));
     }
 }

@@ -1,5 +1,5 @@
 <div class="messenger-sendCard">
-    <form id="message-form" method="POST" action="{{ route('send.message') }}" enctype="multipart/form-data">
+    <form id="message-form" method="POST" action="{{ route('group.send.message') }}" enctype="multipart/form-data">
         @csrf
         <label><span class="fas fa-paperclip"></span><input disabled='disabled' type="file" class="upload-attachment"
                 name="file"

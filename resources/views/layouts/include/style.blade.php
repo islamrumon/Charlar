@@ -17,14 +17,7 @@
 
 
 <link rel="stylesheet" type="text/css" href="{{asset('/')}}/assets/css/vendors/font-awesome.css">
-<!-- ico-font-->
-<link rel="stylesheet" type="text/css" href="{{asset('/')}}/assets/css/vendors/icofont.css">
-<!-- Themify icon-->
-<link rel="stylesheet" type="text/css" href="{{asset('/')}}/assets/css/vendors/themify.css">
-<!-- Flag icon-->
-<link rel="stylesheet" type="text/css" href="{{asset('/')}}/assets/css/vendors/flag-icon.css">
-<!-- Feather icon-->
-<link rel="stylesheet" type="text/css" href="{{asset('/')}}/assets/css/vendors/feather-icon.css">
+
 <!-- Plugins css start-->
 <link rel="stylesheet" type="text/css" href="{{asset('/')}}/assets/css/vendors/scrollbar.css">
 <link rel="stylesheet" type="text/css" href="{{asset('/')}}/assets/css/vendors/animate.css">
@@ -38,17 +31,11 @@
 <!-- Plugins css Ends-->
 
 
-<!-- Plugins css start-->
-<link rel="stylesheet" type="text/css" href="{{asset('/')}}/assets/css/vendors/owlcarousel.css">
 <link rel="stylesheet" type="text/css" href="{{asset('/')}}/assets/css/vendors/prism.css">
 <link rel="stylesheet" type="text/css" href="{{asset('/')}}/assets/css/vendors/whether-icon.css">
 <!-- Plugins css Ends-->
 
-<link rel="stylesheet" type="text/css" href="{{asset('/')}}/assets/css/vendors/image-cropper.css">
-<!-- Plugins css Ends-->
-
 <!-- Plugins css start-->
-
 <link rel="stylesheet" type="text/css" href="{{asset('/')}}/assets/css/vendors/select2.css">
 <!-- Plugins css Ends-->
 
@@ -66,20 +53,9 @@
 
 
 
-<!-- Plugins css start-->
-<link rel="stylesheet" type="text/css" href="{{asset('/')}}/assets/css/vendors/datatables.css">
-<link rel="stylesheet" type="text/css" href="{{asset('/')}}/assets/css/vendors/rating.css">
-<!-- Plugins css Ends-->
 
 
 
-{{-- <link rel="stylesheet" type="text/css" href="{{asset('/')}}/assets/css/vendors/mapsjs-ui.css"> --}}
-<!-- Plugins css Ends-->
-
-<!-- Plugins css start-->
-
-<link rel="stylesheet" type="text/css" href="{{asset('/')}}/assets/css/vendors/page-builder.css">
-<!-- Plugins css Ends-->
 
 <link rel="stylesheet" type="text/css" href="{{asset('/')}}/assets/css/vendors/slick-theme.css">
 <link rel="stylesheet" type="text/css" href="{{asset('/')}}/assets/css/vendors/slick.css">
