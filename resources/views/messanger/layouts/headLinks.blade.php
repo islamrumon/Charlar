@@ -8,17 +8,19 @@
 <meta name="messenger-color" content="{{ $messengerColor }}">
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <meta name="url" content="{{ url('') . '/' . config('chatify.routes.prefix') }}" data-user="{{ Auth::user()->id }}">
+@include('layouts.include.head')
+<title>{{ getSystemSetting('type_name') }} | {{ getSystemSetting('cms_title') }} - @yield('title') </title>
 
+@livewireStyles
 {{-- scripts --}}
-<script src="{{ asset('/') }}/assets/js/jquery-3.5.1.min.js"></script>
-<script src="{{ asset('/') }}/assets/js/bootstrap/bootstrap.bundle.min.js"></script>
-<script src="{{ asset('/') }}/assets/js/bootstrap/popper.min.js"></script>
-<script src="{{ asset('js/chatify/font.awesome.min.js') }}"></script>
+<script src="{{ asset('/') }}/assets/js/jquery-3.5.1.js"></script>
+<script src="{{ asset('/') }}/assets/js/bootstrap/bootstrap.bundle.js"></script>
+<script src="{{ asset('/') }}/assets/js/bootstrap/popper.js"></script>
+<script src="{{ asset('js/chatify/font.awesome.js') }}"></script>
 <script src="{{ asset('js/fuse.js')}}"></script>
 <script src="{{ asset('js/chatify/autosize.js') }}"></script>
 <script src='{{ asset('js/nprogress.js') }}'></script>
-
-
+<script src='{{ asset('vendor/livewire/livewire.js') }}'></script>
 
 
 
@@ -169,12 +171,12 @@
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
 <link rel="stylesheet"
-    href="{{asset('css/bootstrap-material-design.min.css')}}" crossorigin="anonymous">
+    href="{{asset('css/bootstrap-material-design.css')}}" crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" href="{{ asset('/') }}/assets/css/vendors/font-awesome.css">
-<link rel="stylesheet" type="text/css"
-    href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons">
+
 <link rel="stylesgeet"
     href="{{asset('css/material-kit.css')}}">
+
 <style>
   
 

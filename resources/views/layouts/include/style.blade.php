@@ -97,7 +97,7 @@
 <!-- Custom CSS-->
 <link rel="stylesheet" type="text/css" href="{{ asset('/') }}/custom/admin.css">
 
-
+@livewireStyles
 
 
 <style>

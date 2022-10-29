@@ -8,7 +8,8 @@
 <meta name="messenger-color" content="{{ $messengerColor }}">
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <meta name="url" content="{{ route('group.messanger') }}" data-user="{{ Auth::user()->id }}">
-
+@include('layouts.include.head')
+<title>{{ getSystemSetting('type_name') }} | {{ getSystemSetting('cms_title') }} - @yield('title') </title>
 {{-- styles --}}
 <!-- Bootstrap css-->
 <link rel="stylesheet" type="text/css" href="{{ asset('/') }}/assets/css/vendors/bootstrap.css">
@@ -22,11 +23,11 @@
 @include('messanger.layouts.messengerColor')
 @livewireStyles
 {{-- scripts --}}
-<script src="{{ asset('/') }}/assets/js/jquery-3.5.1.min.js"></script>
-<script src="{{ asset('/') }}/assets/js/bootstrap/bootstrap.bundle.min.js"></script>
-<script src="{{ asset('/') }}/assets/js/bootstrap/popper.min.js"></script>
+<script src="{{ asset('/') }}/assets/js/jquery-3.5.1.js"></script>
+<script src="{{ asset('/') }}/assets/js/bootstrap/bootstrap.bundle.js"></script>
+<script src="{{ asset('/') }}/assets/js/bootstrap/popper.js"></script>
 
-<script src="{{ asset('js/chatify/font.awesome.min.js') }}"></script>
+<script src="{{ asset('js/chatify/font.awesome.js') }}"></script>
 <script src="{{ asset('js/fuse.js') }}"></script>
 <script src="{{ asset('js/chatify/autosize.js') }}"></script>
 <script src='{{ asset('js/nprogress.js') }}'></script>

@@ -15,9 +15,7 @@
     @include('layouts.include.style')
 
     <link rel="stylesheet" href="{{ asset('agora_sdk/index.css') }}">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-
+    <link rel="stylesheet" type="text/css" href="{{asset('/')}}/assets/css/vendors/bootstrap.css">
 </head>
 
 <body>
@@ -127,7 +125,7 @@
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
     @include('layouts.include.script')
     <script src="{{ asset('js/fuse.js') }}"></script>
     <script src="{{ asset('agora_sdk/AgoraRTC_N-4.13.0.js') }}"></script>
