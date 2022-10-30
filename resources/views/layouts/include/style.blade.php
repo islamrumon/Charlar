@@ -94,8 +94,6 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('/') }}/assets/css/responsive.css">
 
 
-<!-- Custom CSS-->
-<link rel="stylesheet" type="text/css" href="{{ asset('/') }}/custom/admin.css">
 
 @livewireStyles
 

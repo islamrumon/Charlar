@@ -229,9 +229,6 @@
 
  <!-- Plugins JS start-->
 
- <script src="{{ asset('/') }}/assets/js/form-wizard/form-wizard.js"></script>
- <!-- Plugins JS Ends-->
-
 
 
  <!-- Plugins JS start-->
@@ -262,14 +259,6 @@
  <script src="{{ asset('/') }}/assets/js/print.js"></script>
  <!-- Plugins JS Ends-->
 
-
-
- <!-- Plugins JS start-->
-
- <script src="{{ asset('/') }}/assets/js/jsgrid/jsgrid.js"></script>
- <script src="{{ asset('/') }}/assets/js/jsgrid/griddata.js"></script>
- <script src="{{ asset('/') }}/assets/js/jsgrid/jsgrid.js"></script>
- <!-- Plugins JS Ends-->
 
 
 
@@ -411,5 +400,5 @@
 
  <script src="{{ asset('/') }}/js/script.js"></script>
  <script src="{{ asset('/') }}/js/gt.js"></script>
- <script src='{{ asset('vendor/livewire/livewire.js') }}'></script>
- 
+ {{-- <script src='{{ asset('vendor/livewire/livewire.js') }}'></script> --}}
+ @livewireScripts

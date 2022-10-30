@@ -64,7 +64,7 @@
                     </li>
 
                     <li class="sidebar-list">
-                        <a class="sidebar-link sidebar-title link-nav  {{ request()->is('dashboard/users/profile') ? 'active' : null }}"
+                        <a class="sidebar-link sidebar-title link-nav  {{ request()->is('dashboard/profile/users*') ? 'active' : null }}"
                             href="{{ route('profile.user') }}">
 
                             <span class="03">Profiles</span></a>

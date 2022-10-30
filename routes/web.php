@@ -88,7 +88,7 @@ Route::get('/config-cache', function () {
 
 Route::group(['middleware' => 'auth', 'prefix' => 'dashboard'], function () {
 
-    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::get('analytics', [AnalyticsController::class, 'index'])->name('analytics.dashboard'); //->middleware('permissions:analytics_dashboard');
     //there are the user Manager section
@@ -171,18 +171,6 @@ Route::group(['middleware' => 'auth', 'prefix' => 'dashboard'], function () {
     Route::get('pages/content/delete/{id}', [CommonController::class, 'contentDestroy'])->name('pages.content.destroy'); //->middleware('permissions:page_managment');
 
 
-
-
-  
-
-   
-
-   
-
- 
-
-
-
     //change password
     Route::get('change/password', [CommonController::class, 'changePassword'])->name('change.password');
     Route::post('password/update', [CommonController::class, 'changeUpdate'])->name('change.password.update');
@@ -191,12 +179,6 @@ Route::group(['middleware' => 'auth', 'prefix' => 'dashboard'], function () {
     Route::get('seo/setup', [CommonController::class, 'seoSetup'])->name('seo.setup'); //->middleware('permissions:seo');
     Route::post('seo/update', [CommonController::class, 'seoUpdate'])->name('seo.update'); //->middleware('permissions:seo');
 
-   
-
-    
-
-
-  
 
     //static contetn
     Route::get('page/home', [CommonController::class, 'homePageStaticContentForm'])->name('home.page'); //->middleware('permissions:page_managment');
@@ -247,11 +229,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'dashboard'], function () {
     Route::post('blog/post/update', [PostController::class, 'update'])->name('blog.post.update'); //->middleware('permissions:blog_module');
 
 
-  
-
-
-    //    menu
-    //menu
+    // menu
+    // menu
     Route::get('menu', [MenuController::class, 'index'])->name('menu');
     Route::post('menu/store', [MenuController::class, 'store'])->name('menu.store');
     Route::get('menu/published', [MenuController::class, 'published'])->name('menu.published');
@@ -273,7 +252,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'dashboard'], function () {
     // link
     Route::get('links', [CommonController::class, 'links'])->name('urls');
 
-    Route::get('users/profile',[HomeController::class,'usersProfile'])->name('profile.user');
+    Route::get('profile/users',[HomeController::class,'usersProfile'])->name('profile.user');
     Route::get('chat/group',[HomeController::class,'chatGroups'])->name('chat.group');
     
     

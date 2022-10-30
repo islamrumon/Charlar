@@ -18,10 +18,10 @@
 <link href="{{ asset('css/chatify/' . $dark_mode . '.mode.css') }}" rel="stylesheet" />
 
 
-
+@livewireStyles
 {{-- Messenger Color Style --}}
 @include('messanger.layouts.messengerColor')
-@livewireStyles
+
 {{-- scripts --}}
 <script src="{{ asset('/') }}/assets/js/jquery-3.5.1.js"></script>
 <script src="{{ asset('/') }}/assets/js/bootstrap/bootstrap.bundle.js"></script>
@@ -31,15 +31,12 @@
 <script src="{{ asset('js/fuse.js') }}"></script>
 <script src="{{ asset('js/chatify/autosize.js') }}"></script>
 <script src='{{ asset('js/nprogress.js') }}'></script>
-<script src='{{ asset('vendor/livewire/livewire.js') }}'></script>
 
-
-
-{{-- @livewireScripts --}}
 
 
 
 <script>
+    "use strict"
     var big_image;
 
     $(document).ready(function() {
@@ -173,4 +170,5 @@
     });
 </script>
 
+@livewireScripts
 
