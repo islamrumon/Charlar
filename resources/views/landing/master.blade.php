@@ -112,8 +112,13 @@
             <div class="row">
                 <div class="col-lg-3 col-md-6">
                     <div class="footer-widget widget about_widget">
-                        <a href="{{ route('home') }}" class="footer-logo"><img
-                                src="{{ getSystemSetting('footer_logo') }}" alt=""></a>
+
+
+                        @if (getSystemSetting('multi_lang') == 'Yes')
+                            <a class="dropdown-btn mt-2" href="javascript:void(0)" role="button">
+                                <div class="languagebar m-l-5 m-r-5" id="google_translate_element"></div>
+                            </a>
+                        @endif
                         <ul class="social-icon">
                             @if (getSystemSetting('type_fb') != '')
                                 <li><a href="{{ getSystemSetting('type_fb') }}"><i class="fab fa-facebook-f"></i></a>
@@ -174,6 +179,7 @@
     <script src="{{ asset('landing_assets') }}/js/contact.js"></script>
 
     <script src="{{ asset('landing_assets') }}/js/main.js"></script>
+    <script src="{{ asset('js/gt.js') }}"></script>
 </body>
 
 </html>

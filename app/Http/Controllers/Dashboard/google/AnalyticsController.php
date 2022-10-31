@@ -11,9 +11,10 @@ use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Http\Request;
 
+
+
 use Spatie\Analytics\AnalyticsFacade as Analytics;
 use Spatie\Analytics\Period;
-
 
 class AnalyticsController extends Controller
 {

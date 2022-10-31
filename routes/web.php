@@ -186,8 +186,6 @@ Route::group(['middleware' => 'auth', 'prefix' => 'dashboard'], function () {
 
 
     //static contetn
-    Route::get('page/home', [CommonController::class, 'homePageStaticContentForm'])->name('home.page'); //->middleware('permissions:page_managment');
-    Route::post('page/home/store', [CommonController::class, 'homePageContent'])->name('home.page.store'); //->middleware('permissions:page_managment');
     Route::get('page/others', [CommonController::class, 'othersPageStaticContentForm'])->name('other.page'); //->middleware('permissions:page_managment');
     Route::post('page/others/store', [CommonController::class, 'othersPage'])->name('other.page.store'); //->middleware('permissions:page_managment');
 
@@ -202,6 +200,14 @@ Route::group(['middleware' => 'auth', 'prefix' => 'dashboard'], function () {
     Route::get('google/analytics', [AnalyticsController::class, 'googleAnalytics'])->name('google.analytics'); //->middleware('permissions:setting');
     Route::post('google/analytics/store', [AnalyticsController::class, 'googleAnalyticsStore'])->name('google.analytics.store'); //->middleware('permissions:setting');
 
+    //sdk install
+    Route::get('app/sdk',[CommonController::class,'appSdkCreate'])->name('app.sdk');
+    Route::post('agora/sdk',[CommonController::class,'agoraSdkStore'])->name('agora.sdk.store');
+
+     //pusher sdk install
+     Route::get('pusher/sdk',[CommonController::class,'pusherSdkCreate'])->name('pusher.sdk');
+     Route::post('pusher/sdk/store',[CommonController::class,'pusherSdkStore'])->name('pusher.sdk.store');
+    
     //google map
     Route::get('google/map/setup', [CommonController::class, 'googleMap'])->name('google.map'); //->middleware('permissions:setting');
     Route::post('google/map/store', [CommonController::class, 'googleMapStore'])->name('google.map.store'); //->middleware('permissions:setting');

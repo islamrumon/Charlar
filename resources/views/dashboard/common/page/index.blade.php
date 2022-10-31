@@ -29,7 +29,7 @@
                             <th>@translate(S / L)</th>
 
                             <th>@translate(Title)</th>
-                            <th>@translate(Widgets)</th>
+                            
                             <th>@translate(Total Content)</th>
                             <th>@translate(Published)</th>
                             <th>@translate(Authorize)</th>
@@ -47,20 +47,7 @@
                                             href="{{ route('page', $item->slug) }}">{{ route('page', $item->slug) }}</a></span>
                                 </td>
 
-                                <td>
-                                    @if ($item->widgets != null)
-                                        @foreach (config('widgets') as $key => $value)
-                                            @foreach (json_decode($item->widgets) as $item1)
-                                                @if ($key == $item1)
-                                                    <p>{{ $value }}</p>
-                                                @endif
-                                            @endforeach
-                                        @endforeach
-                                    @endif
-
-
-
-                                </td>
+                               
                                 <td>
                                     {{ $item->content->count() ?? 'N/A' }}
                                 </td>

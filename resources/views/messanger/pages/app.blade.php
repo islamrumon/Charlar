@@ -77,8 +77,12 @@
                 {{-- header buttons --}}
                 <nav class="m-header-right">
                     <input value="{{ route('send.call') }}" type="hidden" id="callingUrl">
+                    @if(getSystemSetting('video_call') == 'Yes')
                     <a href="#" class="video-call"><i class="fas fa-video"></i></a>
+                    @endif
+                    @if(getSystemSetting('video_call')  == 'Yes')
                     <a href="#" class="audio-call"><i class="fas fa-phone"></i></a>
+                    @endif
                     <a href="#" class="add-to-favorite"><i class="fas fa-star"></i></a>
 
                     <a href="{{ route(config('chatify.routes.prefix')) }}"><i class="fas fa-home"></i></a>

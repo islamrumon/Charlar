@@ -16,115 +16,65 @@
 
                     <div class="row">
                         <div class="col-md-6">
-
-                            <div class="mb-3">
-                                <label>@translate(Header Title)</label>
-                                <input type="text" value="{{ getSystemSetting('cms_title') }}" name="cms_title"
-                                    class="form-control">
-                            </div>
-                            <div class="mb-3">
-                                <label>@translate(Contact Location)</label>
-                                <textarea class="form-control" name="footer_location">@pureme(getSystemSetting('footer_location'))</textarea>
-
-                            </div>
-                            <div class="mb-3">
-                                <label>@translate(Contact Mails)</label>
-                                <textarea class="form-control" name="footer_mail">@pureme(getSystemSetting('footer_mail'))</textarea>
-                            </div>
-                            <div class="mb-3">
-                                <label>@translate(Contact Numbers)</label>
-                                <textarea class="form-control" name="footer_number">@pureme(getSystemSetting('footer_number'))</textarea>
-                            </div>
-
-                            <div class="mb-3">
-                                <label>@translate(Footer Text)</label>
-                                <textarea class="form-control" name="footer_desc">@pureme(getSystemSetting('footer_desc'))</textarea>
-                            </div>
-
-
-                            <div class="mb-3">
-                                <label>@translate(System Paginate count)</label>
-                                <input type="number" value="{{ getSystemSetting('paginate') }}" name="paginate"
-                                    class="form-control">
-                            </div>
-                            <div class="mb-3">
-                                <label>@translate(Newsletter active)</label>
-                                <select name="newsletter" class="select form-control">
-                                    <option value="off"
-                                        {{ getSystemSetting('newsletter') == 'off' ? 'selected' : null }}>
-                                        OFF
-                                    </option>
-                                    <option value="on" {{ getSystemSetting('newsletter') == 'on' ? 'selected' : null }}>
-                                        ON
-                                    </option>
-                                </select>
-                            </div>
-
-                            <div class="mb-3">
-                                <label>@translate(Multi languages active)</label>
-                                <select name="multi_lang" class="select form-control">
-                                    <option value="Yes"
-                                        {{ getSystemSetting('multi_lang') == 'Yes' ? 'selected' : null }}>
-                                        On
-                                    </option>
-                                    <option value="No"
-                                        {{ getSystemSetting('multi_lang') == 'No' ? 'selected' : null }}>
-                                        Off
-                                    </option>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label>@translate(Multi Currency active)</label>
-                                <select name="multi_currency" class="select form-control">
-                                    <option value="Yes"
-                                        {{ getSystemSetting('multi_currency') == 'Yes' ? 'selected' : null }}>On
-                                    </option>
-                                    <option value="No"
-                                        {{ getSystemSetting('multi_currency') == 'No' ? 'selected' : null }}>
-                                        Off
-                                    </option>
-                                </select>
+                            <div class="card">
+                                <div class="card-header">
+                                    <h2 class="card-title">Google Translate </h2>
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <div class="form-floating">
+                                            <select class="form-select" name="multi_lang" id="floatingSelect" aria-label="Floating label select example">
+                                              <option value="Yes" {{getSystemSetting('multi_lang') == "Yes" ? 'selected' : null}}>On</option>
+                                              <option value="No" {{getSystemSetting('multi_lang') == "No" ? 'selected' : null}}>Off</option>
+                                            </select>
+                                            <label for="floatingSelect">@translate(Google translate active)</label>
+                                          </div>
+                                        <label></label>
+                                        
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
                             </div>
                         </div>
+
                         <div class="col-md-6">
-                            <div class="mb-3">
-                                <label>@translate(Pre loader)</label>
-                                <div class="avatar-upload">
-                                    <div class="avatar-edit">
-                                        <input type='file' name="pre_loader" id="imageUpload"
-                                            accept=".png, .jpg, .jpeg" />
-                                        <label for="imageUpload"></label>
+                            <div class="card">
+                                <div class="card-header">
+                                    <h2 class="card-title">Calling Features </h2>
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <div class="form-floating">
+                                            <select class="form-select" name="voice_call" id="floatingSelect" aria-label="Floating label select example">
+                                              <option value="Yes" {{getSystemSetting('voice_call') == "Yes" ? 'selected' : null}}>On</option>
+                                              <option value="No" {{getSystemSetting('voice_call') == "No" ? 'selected' : null}}>Off</option>
+                                            </select>
+                                            <label for="floatingSelect">@translate(Voice Calling active)</label>
+                                          </div>
+                                        <label></label>
+                                        
                                     </div>
-                                    <div class="avatar-preview">
-                                        <div id="imageUpload"
-                                            style="background-image: url('{{ filePath(getSystemSetting('pre_loader')) }}');">
-                                        </div>
+
+                                    <div class="mb-3">
+                                        <div class="form-floating">
+                                            <select class="form-select" name="video_call" id="floatingSelect" aria-label="Floating label select example">
+                                              <option value="Yes" {{getSystemSetting('video_call') == "Yes" ? 'selected' : null}}>On</option>
+                                              <option value="No" {{getSystemSetting('video_call') == "No" ? 'selected' : null}}>Off</option>
+                                            </select>
+                                            <label for="floatingSelect">@translate(Video Calling active)</label>
+                                          </div>
+                                        <label></label>
+                                        
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="mb-3">
-                                <label>@translate(Login Page image)</label>
-                                <div class="avatar-upload">
-                                    <div class="avatar-edit">
-                                        <input type='file' name="login_image" id="imageUpload"
-                                            accept=".png, .jpg, .jpeg" />
-                                        <label for="imageUpload"></label>
-                                    </div>
-                                    <div class="avatar-preview">
-                                        <div id="imageUpload"
-                                            style="background-image: url('{{ filePath(getSystemSetting('login_image')) }}');">
-                                        </div>
-                                    </div>
+                                <div class="card-footer">
+                                    <button type="submit" class="btn btn-primary">Save</button>
                                 </div>
                             </div>
                         </div>
 
-                    </div>
-
-
-                    <div class="m-2">
-                        <button class="btn btn-block btn-primary" type="submit">@translate(Save)</button>
                     </div>
                 </form>
 

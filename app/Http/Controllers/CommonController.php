@@ -62,6 +62,36 @@ class CommonController extends Controller
         return view('dashboard.contactMessages', compact('contacts'));
     }
 
+    public function appSdkCreate()
+    {
+        return view('dashboard.sdk');
+    }
+
+    public function appSdkStore(Request $request)
+    {
+        overWriteEnvFile('agora_app_id',$request->agora_app_id);
+        overWriteEnvFile('agora_app_certificate',$request->agora_app_certificate);
+        return back()->with(['message' => translate('Agora sdk configuration is  updated'), 'type' => 'success', 'title' => translate('Updated')]);
+    }
+
+
+    public function pusherSdkCreate()
+    {
+        return view('dashboard.pusher');
+    }
+
+    public function pusherSdkStore(Request $request)
+    {
+        overWriteEnvFile('PUSHER_APP_ID',$request->PUSHER_APP_ID);
+        overWriteEnvFile('PUSHER_APP_KEY',$request->PUSHER_APP_KEY);
+        overWriteEnvFile('PUSHER_APP_SECRET',$request->PUSHER_APP_SECRET);
+        overWriteEnvFile('PUSHER_HOST',$request->PUSHER_HOST);
+        overWriteEnvFile('PUSHER_PORT',$request->PUSHER_PORT);
+        overWriteEnvFile('PUSHER_SCHEME',$request->PUSHER_SCHEME);
+        overWriteEnvFile('PUSHER_APP_CLUSTER',$request->PUSHER_APP_CLUSTER);
+        return back()->with(['message' => translate('Pusher sdk configuration is updated'), 'type' => 'success', 'title' => translate('Updated')]);
+    }
+
     public function seoUpdate(Request $request)
     {
 
@@ -211,66 +241,56 @@ class CommonController extends Controller
 
     public function othersPageStaticContentForm()
     {
-        return view('dashboard.page.other');
+        return view('dashboard.common.page.others');
     }
     public function othersPage(Request $request)
     {
-        if ($request->has('category_title')) {
-            setSystemSetting('category_title', $request->category_title);
+        if ($request->has('slider_title')) {
+            setSystemSetting('slider_title', $request->slider_title);
         }
-
-        if ($request->hasFile('category_image')) {
-            $image = fileUpload($request->category_image, 'ads', '');
-            setSystemSetting('category_image', $image);
+        if ($request->has('slider_btn')) {
+            setSystemSetting('slider_btn', $request->slider_btn);
         }
-
-        if ($request->has('category_sub_title')) {
-            setSystemSetting('category_sub_title', $request->category_sub_title);
+        if ($request->has('slider_sub_title')) {
+            setSystemSetting('slider_sub_title', $request->slider_sub_title);
         }
-
-        if ($request->has('state_title')) {
-            setSystemSetting('state_title', $request->state_title);
+        if ($request->hasFile('slider_right_image')) {
+            $image = fileUpload($request->slider_right_image, 'landing', '');
+            setSystemSetting('slider_right_image', $image);
         }
-
-        if ($request->hasFile('state_image')) {
-            $image = fileUpload($request->state_image, 'ads', '');
-            setSystemSetting('state_image', $image);
-        }
-
-        if ($request->has('state_sub_title')) {
-            setSystemSetting('state_sub_title', $request->state_sub_title);
-        }
+        //slider section
 
 
-        if ($request->has('dashboard_text')) {
-            setSystemSetting('dashboard_text', $request->dashboard_text);
+        if ($request->has('about_1_title')) {
+            setSystemSetting('about_1_title', $request->about_1_title);
+        }
+        if ($request->has('about_1_sub_title')) {
+            setSystemSetting('about_1_sub_title', $request->about_1_sub_title);
+        }
+        if ($request->hasFile('about_1_image')) {
+            $image = fileUpload($request->about_1_image, 'landing', '');
+            setSystemSetting('about_1_image', $image);
+        }
+        //about 1 section
+
+        if ($request->has('about_2_title')) {
+            setSystemSetting('about_2_title', $request->about_2_title);
+        }
+        if ($request->has('about_2_sub_title')) {
+            setSystemSetting('about_2_sub_title', $request->about_2_sub_title);
+        }
+        if ($request->hasFile('about_2_image')) {
+            $image = fileUpload($request->about_2_image, 'landing', '');
+            setSystemSetting('about_2_image', $image);
+        }
+        //about 2 section
+
+
+        if ($request->has('contact_sub_title')) {
+            setSystemSetting('contact_sub_title', $request->contact_sub_title);
         }
 
-        if ($request->has('ads_page_title')) {
-            setSystemSetting('ads_page_title', $request->ads_page_title);
-        }
-
-        if ($request->has('ads_page_sub_title')) {
-            setSystemSetting('ads_page_sub_title', $request->ads_page_sub_title);
-        }
-
-        if ($request->hasFile('ads_page_image')) {
-            $image = fileUpload($request->ads_page_image, 'ads', '');
-            setSystemSetting('ads_page_image', $image);
-        }
-        if ($request->hasFile('ad_details_image')) {
-            $image = fileUpload($request->ad_details_image, 'ads', '');
-            setSystemSetting('ad_details_image', $image);
-        }
-
-        if ($request->hasFile('login_banner')) {
-            $image = fileUpload($request->login_banner, 'ads', '');
-            setSystemSetting('login_banner', $image);
-        }
-
-        if ($request->has('related_ads_text')) {
-            setSystemSetting('related_ads_text', $request->related_ads_text);
-        }
+       
         return back()->with([
             'message' => translate('Others page static contend successfully updated'),
             'type' => 'success',

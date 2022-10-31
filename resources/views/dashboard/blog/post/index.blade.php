@@ -45,7 +45,11 @@
                                             class="nav-link">{{ checkNull($item->slug) }}</a></p>
                                 </td>
                                 <td>
+                                    @if($item->author != null)
                                     {{ $item->author->name }}
+                                    @else
+                                    <p>No Author</p>
+                                    @endif
                                 </td>
                                 <td>
 

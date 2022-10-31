@@ -143,15 +143,21 @@
                         </a>
                     </li>
 
-                    <li class="sidebar-list">
-                        <a class="sidebar-link sidebar-title {{ request()->is('dashboard/social/credential*') || request()->is('dashboard/google*') ? 'active' : null }}"
+                    <li class="sidebar-list  ">
+                        <a class="sidebar-link sidebar-title {{ request()->is('dashboard/social/credential*') || request()->is('dashboard/pusher/sdk*') || request()->is('dashboard/google*') || request()->is('dashboard/app/sdk*') ? 'active' : null }}"
                             href="#">
-                            <span class="03">Third party</span></a>
-                        <ul class="sidebar-submenu">
+                            <span class="03">Third Party Apps</span></a>
+                        <ul class="sidebar-submenu {{ request()->is('dashboard/social/credential*') || request()->is('dashboard/pusher/sdk*') || request()->is('dashboard/google*') || request()->is('dashboard/app/sdk*') ? 'd-block' : null }}">
                             <li><a class="{{ request()->is('dashboard/social/credential*') ? 'active' : null }}"
                                     href="{{ route('social.credebtial') }}">Social Login</a></li>
                             <li><a class="{{ request()->is('dashboard/google/analytics*') ? 'active' : null }}"
                                     href="{{ route('google.analytics') }}">Google Analytics</a></li>
+
+                                    <li><a class="{{ request()->is('dashboard/app/sdk*') ? 'active' : null }}"
+                                        href="{{ route('app.sdk') }}">Agora Setup</a></li>
+
+                                        <li><a class="{{ request()->is('dashboard/pusher/sdk*') ? 'active' : null }}"
+                                            href="{{ route('pusher.sdk') }}">Pusher Setup</a></li>
 
                         </ul>
                     </li>
@@ -175,17 +181,17 @@
                             request()->is('dashboard/smtp*')
                                 ? 'd-block'
                                 : null }}">
-                            @can('seo-setup')
+                            {{-- @can('seo-setup') --}}
                                 <li><a class="{{ request()->is('dashboard/seo') ? 'active' : null }}"
                                         href="{{ route('seo.setup') }}">@translate(SEO Setup)</a></li>
-                            @endcan
+                            {{-- @endcan --}}
 
                             <li><a href="{{ route('system.setting') }}">@translate(System Settings)</a></li>
                             <li><a href="{{ route('site.setting') }}">@translate(Cms Settings)</a></li>
                             <li><a href="{{ route('clear') }}">@translate(Clear System Cache)</a></li>
-                            @can('mail-setup')
+                            {{-- @can('mail-setup') --}}
                                 <li><a href="{{ route('smtp.create') }}">@translate(Mail Setup)</a></li>
-                            @endcan
+                            {{-- @endcan --}}
 
                         </ul>
 

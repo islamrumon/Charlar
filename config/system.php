@@ -30,13 +30,16 @@ return [
     'newsletter' => 'off',
     'paginate' => '12',
     'pre_loader' => 'uploads/site/pre-loader3065.gif',
+
     'facebook_login_status' => 'Yes',
     'google_login_status' => 'Yes',
+
     'google_analytics_active' => 'Yes',
     'push_notify_active' => 'Yes',
 
-    'multi_lang' => 'Yes',
-    'multi_currency' => 'Yes',
+    'multi_lang' => 'No',
+    "voice_call" => 'Yes',
+    "video_call" => 'Yes',
 
     "slider_title" => "Imagine a place",
     "slider_btn"=> "Open Charlar In the browser",

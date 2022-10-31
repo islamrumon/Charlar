@@ -199,6 +199,7 @@ return [
         Mews\Purifier\PurifierServiceProvider::class,
         TranslateServiceProvider::class,
         CustomPurifierServiceProvider::class,
+        October\Rain\Config\ServiceProvider::class,
 
     ],
 

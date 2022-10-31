@@ -19,27 +19,28 @@
                 <a href="{{ route(config('chatify.routes.prefix')) }}">
                     <span class="far fa-user"></span> People</a>
 
-                <a href="{{ route('group.messanger') }}" @if (Request::is('group/*')) class="active-tab" @endif data-view="users">
+                <a href="{{ route('group.messanger') }}" @if (Request::is('group/*')) class="active-tab" @endif
+                    data-view="users">
                     <span class="fas fa-users"></span> Groups</a>
             </div>
         </div>
         {{-- tabs and lists --}}
         <div class="m-body contacts-container">
             {{-- Lists [Users/Group] --}}
-           
+
             {{-- ---------------- [ Group Tab ] ---------------- --}}
-            <div class="show messenger-tab groups-tab app-scroll"
-                data-view="users">
+            <div class="show messenger-tab groups-tab app-scroll" data-view="users">
                 {{-- items --}}
-               <input type="hidden" id="groupCreate" value="{{route('group.create')}}">
-               {{-- onclick="createGroup()" --}}
+                <input type="hidden" id="groupCreate" value="{{ route('group.create') }}">
+                {{-- onclick="createGroup()" --}}
                 <div class="g-create-div">
-                    <button class="btn btn-light group-create-btn" style="color:{{ $messengerColor }}; !importent" >Create new group</button>
+                    <button class="btn btn-light group-create-btn"
+                        style="color:{{ $messengerColor }}; !importent">Create new group</button>
                 </div>
 
                 {!! view('group.layouts.listItem', ['get' => 'saved']) !!}
-                 {{-- Contact --}}
-                 <div class="listOfContactsGroup"></div>
+                {{-- Contact --}}
+                <div class="listOfContactsGroup"></div>
             </div>
 
             {{-- ---------------- [ Search Tab ] ---------------- --}}
@@ -71,8 +72,14 @@
                 {{-- header buttons --}}
                 <nav class="m-header-right">
                     <input value="{{ route('group.send.call') }}" type="hidden" id="callingUrl">
-                    <a href="#" class="video-call"><i class="fas fa-video"></i></a>
-                    <a href="#" class="audio-call"><i class="fas fa-phone"></i></a>
+                    
+                    @if (getSystemSetting('video_call') == 'Yes')
+                        <a href="#" class="video-call"><i class="fas fa-video"></i></a>
+                    @endif
+
+                    @if (getSystemSetting('video_call') == 'Yes')
+                        <a href="#" class="audio-call"><i class="fas fa-phone"></i></a>
+                    @endif
 
                     <a href="{{ route('group.messanger') }}"><i class="fas fa-home"></i></a>
                     <a href="#" class="show-infoSide"><i class="fas fa-info-circle"></i></a>
