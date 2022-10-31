@@ -9,6 +9,7 @@ use App\Models\PageContent;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use PhpParser\JsonDecoder;
 
 trait PagesTraits
 {
@@ -22,13 +23,14 @@ trait PagesTraits
     //create form
     public function pageCreate()
     {
-        
+
         return view('dashboard.common.page.create');
     }
 
     //store page
     public function pageStore(Request $request)
     {
+       
         $request->validate([
             'title' => ['required', 'unique:pages'],
         ], [
@@ -38,7 +40,10 @@ trait PagesTraits
         $page = new Page();
         $page->slug = Str::slug($request->title);
         $page->title = $request->title;
-       
+        if ($request->widgets != null) {
+            $page->widgets = json_encode($request->widgets);
+        }
+
         $page->save();
         return back()->with(['message' => translate('Page create successfully'), 'type' => 'success', 'title' => translate('Success')]);
     }
@@ -54,6 +59,7 @@ trait PagesTraits
     /*update save*/
     public function pageUpdate(Request $request)
     {
+        
         $request->validate([
             'title' => 'required',
             'id' => 'required',
@@ -64,6 +70,9 @@ trait PagesTraits
         $page = Page::where('id', $request->id)->firstOrFail();
         $page->title = $request->title;
         $page->slug = Str::slug($request->title);
+        if ($request->widgets != null) {
+            $page->widgets = json_encode($request->widgets);
+        }
         $page->save();
         return back()->with(['message' => translate('Page create successfully'), 'type' => 'success', 'title' => translate('Success')]);
     }
@@ -113,7 +122,7 @@ trait PagesTraits
     {
         $content = PageContent::where('id', $id)->firstOrFail();
 
-        return view('dashboard.common.page.content.edit', compact('content'));
+        return view('dashboard.common.page.content.edit', compact('content','id'));
     }
 
     /*Content Update*/

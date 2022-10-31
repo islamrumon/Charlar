@@ -32,4 +32,9 @@ class Menus extends Model
     {
         return $this->hasMany(MenuItems::class, 'menu')->with('child')->where('parent', 0)->orderBy('sort', 'ASC');
     }
+
+    public function child()
+    {
+        return $this->hasMany(MenuItems::class, 'menu')->with('child')->where('parent', 0)->orderBy('sort', 'ASC');
+    }
 }

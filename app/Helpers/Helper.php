@@ -13,6 +13,11 @@ function routeValDecode($value){
     return Crypt::decrypt($value);
 }
 
+function menuLink($value)
+{
+    return $value;
+}
+
 function openJSONFile($code)
 {
     $jsonString = [];

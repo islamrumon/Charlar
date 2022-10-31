@@ -7,6 +7,7 @@ use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\google\AnalyticsController;
 use App\Http\Controllers\Dashboard\MenuController;
 use App\Http\Controllers\Dashboard\SocialController;
+use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
@@ -23,15 +24,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/natok',function () {
+ return FrontendController::footerMenu();
+});
 
 
 Auth::routes();
 
 Route::get('dark/mood', [CommonController::class, 'darkMood'])->name('dark');
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/', [FrontendController::class, 'index'])->name('home');
+Route::get('/home', [FrontendController::class, 'index'])->name('home');
+Route::get('post/{id}', [FrontendController::class, 'postDetails'])->name('blog.post.details');
+Route::get('posts', [FrontendController::class, 'posts'])->name('blog.posts');
+Route::get('post/category/{slug}', [FrontendController::class, 'categoryPosts'])->name('category.post');
+Route::post('contact/store', [FrontendController::class, 'contactStore'])->name('contact.store');
+Route::get('/page/{slug}', [FrontendController::class, 'page'])->name('page');
 
 // Facebook Login URL
 Route::prefix('facebook')->name('facebook.')->group(function () {
@@ -88,16 +98,16 @@ Route::get('/config-cache', function () {
 
 Route::group(['middleware' => 'auth', 'prefix' => 'dashboard'], function () {
 
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::get('analytics', [AnalyticsController::class, 'index'])->name('analytics.dashboard'); //->middleware('permissions:analytics_dashboard');
     //there are the user Manager section
-    
-    Route::post('user/store/first',[CommonController::class,'userStoreFirst'])->name('user.store.first');
+
+    Route::post('user/store/first', [CommonController::class, 'userStoreFirst'])->name('user.store.first');
     Route::get('user/create', [CommonController::class, 'userCreate'])->name('users.create'); //->middleware('permissions:user_managment');
     Route::get('user/destroy/{id}', [CommonController::class, 'userDestroy'])->name('users.destroy'); //->middleware('permissions:user_managment');
     Route::get('user/edit/{id}', [CommonController::class, 'userEdit'])->name('users.edit'); //->middleware('permissions:user_managment');
-    Route::post('user/update/first',[CommonController::class,'userUpdateFirst'])->name('user.update.first');
+    Route::post('user/update/first', [CommonController::class, 'userUpdateFirst'])->name('user.update.first');
     Route::post('user/update', [CommonController::class, 'userUpdate'])->name('users.update'); //->middleware('permissions:user_managment'); 
     Route::get('user/profile', [CommonController::class, 'userProfile'])->name('users.profile');
     Route::get('user/profile/{id}', [CommonController::class, 'userShow'])->name('users.show'); //->middleware('permissions:user_managment');
@@ -105,8 +115,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'dashboard'], function () {
     Route::get('user/regular', [CommonController::class, 'userRegular'])->name('users.regular'); //->middleware('permissions:user_managment');
     Route::get('user/banned/{id}', [CommonController::class, 'userBanned'])->name('users.banned'); //->middleware('permissions:user_managment');
     Route::get('user/active/{id}', [CommonController::class, 'userActive'])->name('users.active');
-    
-    
+
+
     //permission
     Route::get('permission/destroy/{id}', [CommonController::class, 'permissionDestroy'])->name('permissions.destroy'); //->middleware('permissions:user_managment');
     Route::get('permission/create', [CommonController::class, 'permissionCreate'])->name('permissions.create'); //->middleware('permissions:user_managment');
@@ -145,31 +155,26 @@ Route::group(['middleware' => 'auth', 'prefix' => 'dashboard'], function () {
     Route::post('system/setting/update', [CommonController::class, 'systemSettingUpdate'])->name('system.update'); //->middleware('permissions:setting');
 
 
-  
+
 
 
     //all pages
-    Route::get('page/groups', [CommonController::class, 'pageGroupIndex'])->name('page.group.index'); //->middleware('permissions:page_managment');
-    Route::post('page/group/store', [CommonController::class, 'pageGroupSave'])->name('page.group.store'); //->middleware('permissions:page_managment');
-    Route::get('page/group/edit/{id}', [CommonController::class, 'pageGroupEdit'])->name('page.group.edit'); //->middleware('permissions:page_managment');
-    Route::post('page/group/update', [CommonController::class, 'pageGroupUpdate'])->name('page.group.update'); //->middleware('permissions:page_managment');
-    Route::get('page/group/destroy/{id}', [CommonController::class, 'pageGroupDestroy'])->name('page.group.destroy'); //->middleware('permissions:page_managment');
-    Route::get('pages', [CommonController::class, 'pageIndex'])->name('pages.index'); //->middleware('permissions:page_managment');
-    Route::get('pages/create', [CommonController::class, 'pageCreate'])->name('pages.create'); //->middleware('permissions:page_managment');
-    Route::get('pages/delete/{id}', [CommonController::class, 'pageDestroy'])->name('pages.destroy'); //->middleware('permissions:page_managment');
-    Route::post('pages/store', [CommonController::class, 'pageStore'])->name('pages.store'); //->middleware('permissions:page_managment');
-    Route::get('pages/edit/{id}', [CommonController::class, 'pageEdit'])->name('pages.edit'); //->middleware('permissions:page_managment');
-    Route::post('pages/update', [CommonController::class, 'pageUpdate'])->name('pages.update'); //->middleware('permissions:page_managment');
-    Route::get('pages/active', [CommonController::class, 'pageActive'])->name('pages.active'); //->middleware('permissions:page_managment');
-    Route::get('pages/authorize', [CommonController::class, 'pageAuthorize'])->name('pages.authorize'); //->middleware('permissions:page_managment');
-    Route::get('content/{id}', [CommonController::class, 'contentIndex'])->name('pages.content.index'); //->middleware('permissions:page_managment');
-    Route::get('pages/content/create/{id}', [CommonController::class, 'contentCreate'])->name('pages.content.create'); //->middleware('permissions:page_managment');
-    Route::post('pages/content/store', [CommonController::class, 'contentStore'])->name('pages.content.store'); //->middleware('permissions:page_managment');
-    Route::get('pages/content/active', [CommonController::class, 'contentActive'])->name('pages.content.active'); //->middleware('permissions:page_managment');
-    Route::get('pages/content/edit/{id}', [CommonController::class, 'contentEdit'])->name('pages.content.edit'); //->middleware('permissions:page_managment');
-    Route::post('pages/content/update', [CommonController::class, 'contentUpdate'])->name('pages.content.update'); //->middleware('permissions:page_managment');
-    Route::get('pages/content/delete/{id}', [CommonController::class, 'contentDestroy'])->name('pages.content.destroy'); //->middleware('permissions:page_managment');
-
+    Route::get('pages', [CommonController::class, 'pageIndex'])->name('pages.index');
+    Route::get('pages/create', [CommonController::class, 'pageCreate'])->name('pages.create');
+    Route::get('pages/delete/{id}', [CommonController::class, 'pageDestroy'])->name('pages.destroy');
+    Route::post('pages/store', [CommonController::class, 'pageStore'])->name('pages.store');
+    Route::get('pages/edit/{id}', [CommonController::class, 'pageEdit'])->name('pages.edit');
+    Route::post('pages/update', [CommonController::class, 'pageUpdate'])->name('pages.update');
+    Route::get('pages/active', [CommonController::class, 'pageActive'])->name('pages.active');
+    Route::get('pages/authorize', [CommonController::class, 'pageAuthorize'])->name('pages.authorize');
+    Route::get('content/{id}', [CommonController::class, 'contentIndex'])->name('pages.content.index');
+    Route::get('pages/content/create/{id}', [CommonController::class, 'contentCreate'])->name('pages.content.create');
+    Route::post('pages/content/store', [CommonController::class, 'contentStore'])->name('pages.content.store');
+    Route::get('pages/content/active', [CommonController::class, 'contentActive'])->name('pages.content.active');
+    Route::get('pages/content/edit/{id}', [CommonController::class, 'contentEdit'])->name('pages.content.edit');
+    Route::post('pages/content/update', [CommonController::class, 'contentUpdate'])->name('pages.content.update');
+    Route::get('pages/content/delete/{id}', [CommonController::class, 'contentDestroy'])->name('pages.content.destroy');
+    Route::get('contact/message', [CommonController::class, 'contactMessages'])->name('contact.message');
 
     //change password
     Route::get('change/password', [CommonController::class, 'changePassword'])->name('change.password');
@@ -186,7 +191,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'dashboard'], function () {
     Route::get('page/others', [CommonController::class, 'othersPageStaticContentForm'])->name('other.page'); //->middleware('permissions:page_managment');
     Route::post('page/others/store', [CommonController::class, 'othersPage'])->name('other.page.store'); //->middleware('permissions:page_managment');
 
- 
+
 
     //social login
     Route::get('social/credential', [SocialController::class, 'index'])->name('social.credebtial'); //->middleware('permissions:login_setting');
@@ -252,10 +257,14 @@ Route::group(['middleware' => 'auth', 'prefix' => 'dashboard'], function () {
     // link
     Route::get('links', [CommonController::class, 'links'])->name('urls');
 
-    Route::get('profile/users',[HomeController::class,'usersProfile'])->name('profile.user');
-    Route::get('chat/group',[HomeController::class,'chatGroups'])->name('chat.group');
-    
-    
+    Route::get('profile/users', [HomeController::class, 'usersProfile'])->name('profile.user');
+    Route::get('chat/group', [HomeController::class, 'chatGroups'])->name('chat.group');
+
+
+    //static contetn
+    Route::get('page/others', [CommonController::class, 'othersPageStaticContentForm'])->name('other.page');
+    Route::post('page/others/store', [CommonController::class, 'othersPage'])->name('other.page.store');
+
 });
 
 

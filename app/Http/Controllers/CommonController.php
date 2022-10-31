@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
 use App\Models\BlogPost;
+use App\Models\Contact;
 use App\Models\Page;
 use App\Models\PageGroup;
 use App\Rules\MatchOldPassword;
@@ -53,6 +54,12 @@ class CommonController extends Controller
     public function seoSetup()
     {
         return view('dashboard.common.setting.seo');
+    }
+
+    public function contactMessages()
+    {
+        $contacts = Contact::latest()->get();
+        return view('dashboard.contactMessages', compact('contacts'));
     }
 
     public function seoUpdate(Request $request)

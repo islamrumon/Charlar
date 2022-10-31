@@ -94,10 +94,47 @@
                     </li>
 
                     <li class="sidebar-list">
-                        <a class="sidebar-link sidebar-title link-nav {{ request()->is('dashboard/pages*') || request()->is('dashboard/content*') ? 'active' : null }}"
-                            href="{{ route('pages.index') }}">
-                            <span> Page Managment</span> </a>
+                        <a class="sidebar-link sidebar-title {{ request()->is('dashboard/pages*') ||
+                        request()->is('dashboard/page*') ||
+                        request()->is('dashboard/contact/message*') ||
+                        request()->is('dashboard/testimonial*') ||
+                        request()->is('dashboard/question*') ||
+                        request()->is('dashboard/links*') ||
+                        request()->is('dashboard/service*')
+                            ? 'active'
+                            : null }}"
+                            href="#">
+
+                            <span class="03">@translate(Pages)</span></a>
+                        <ul
+                            class="sidebar-submenu {{ request()->is('dashboard/pages*') ||
+                            request()->is('dashboard/page*') ||
+                            request()->is('dashboard/contact/message*') ||
+                            request()->is('dashboard/links*') ||
+                            request()->is('dashboard/testimonial*') ||
+                            request()->is('dashboard/question*') ||
+                            request()->is('dashboard/service*')
+                                ? 'd-block'
+                                : null }}">
+                            <li><a class="{{ request()->is('dashboard/pages*') ? 'active' : null }}"
+                                    href="{{ route('pages.index') }}">@translate(Dynamic Pages)</a></li>
+
+                            <li><a class="{{ request()->is('dashboard/page/others') ? 'active' : null }}"
+                                    href="{{ route('other.page') }}">@translate(Others Content)</a></li>
+
+                            <li><a class="{{ request()->is('dashboard/contact/message*') ? 'active' : null }}"
+                                    href="{{ route('contact.message') }}">@translate(Contact Messages)</a></li>
+
+                            <li>
+                                <a class=" {{ request()->is('dashboard/links*') ? 'active' : null }}"
+                                    href="{{ route('urls') }}">@translate(Page Links)</a>
+                            </li>
+
+
+                        </ul>
                     </li>
+
+
 
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title link-nav {{ request()->is('dashboard/menu*') ? 'active' : null }} "

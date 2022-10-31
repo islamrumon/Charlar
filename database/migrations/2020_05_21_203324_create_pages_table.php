@@ -16,6 +16,7 @@ class CreatePagesTable extends Migration
         Schema::create('pages', function (Blueprint $table) {
             $table->id();
             $table->string('title')->unique();
+            $table->longText('widgets')->nullable();
             $table->string('slug')->unique();
             $table->boolean('is_authorize')->default(false);
             $table->boolean('active')->default(true);

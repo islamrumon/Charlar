@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->enum('genders',['Male','Female','Other'])->nullable();
             $table->boolean('banned')->default(false); // User cannot login if banned
-            $table->string('avatar')->default('images/avatar.jpg');
+            $table->longText('avatar')->default('images/avatar.jpg');
             $table->timestamp('login_time')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
