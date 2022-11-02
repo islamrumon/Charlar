@@ -4,11 +4,11 @@
 @endsection
 
 @section('sub-title')
-    @can('user-create')
+    {{-- @can('user-create') --}}
         <a href="{{ route('users.create') }}">
             @translate(Add New User)
         </a>
-    @endcan
+    {{-- @endcan --}}
 @endsection
 @section('main-content')
     <!-- Container-fluid starts-->
