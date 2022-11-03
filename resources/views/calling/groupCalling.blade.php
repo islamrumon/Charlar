@@ -15,7 +15,7 @@
     @include('layouts.include.style')
 
     <link rel="stylesheet" href="{{ asset('agora_sdk/index.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{asset('/')}}/assets/css/vendors/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('/') }}/assets/css/vendors/bootstrap.css">
 </head>
 
 <body>
@@ -45,11 +45,12 @@
                                                                     <p id="local-player-name" class="player-name"></p>
                                                                     <div id="local-player" class="player"></div>
                                                                 </div>
-                                                                <div class="w-100"></div>
+                                                                {{-- <div class="w-100"></div> --}}
                                                                 <div class="col">
                                                                     <div id="remote-playerlist"></div>
                                                                 </div>
                                                             </div>
+                                                       
                                                         @endif
                                                         <div>
                                                             <div class="total-time">
@@ -152,14 +153,14 @@
 
     @include('layouts.include.script')
     <script src="{{ asset('js/fuse.js') }}"></script>
-    <script src="{{ asset('agora_sdk/AgoraRTC_N-4.13.0.js') }}"></script>
-    <script src="{{ asset('agora_sdk/index.js') }}"></script>
-    <script src="{{ asset('agora_sdk/audio.js') }}"></script>
+
+    <!-- Pnotify js -->
+    <script src="{{ asset('pnotify/js/pnotify.custom.js') }}"></script>
+    <script src="{{ asset('pnotify/js/custom-pnotify.js') }}"></script>
 
 
     <script src="https://js.pusher.com/7.0.3/pusher.min.js"></script>
     <script>
-        
         // Enable pusher logging - don't include this in production
         Pusher.logToConsole = true;
 
@@ -188,7 +189,7 @@
             console.log("calling");
             console.log(data);
             console.log("calling end");
-            if (data.channel == "{{ $call->channel }}") {
+            if (data.channel == "{{ $call->channel }}" && {{ auth()->id() }} == data.to_id) {
                 location.reload();
             }
 
@@ -313,6 +314,10 @@
             }
         }, 1000);
     </script>
+    <script src="{{ asset('agora_sdk/AgoraRTC_N-4.13.0.js') }}"></script>
+    <script src="{{ asset('agora_sdk/index.js') }}"></script>
+    <script src="{{ asset('agora_sdk/audio.js') }}"></script>
+    @include('layouts.include.pnotify')
 </body>
 
 

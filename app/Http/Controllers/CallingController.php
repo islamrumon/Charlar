@@ -47,10 +47,6 @@ class CallingController extends Controller
 
 
 
-
-
-
-
     public function sendcallingRequest(Request $request)
     {
 
@@ -306,11 +302,17 @@ class CallingController extends Controller
             ->first();
 
         if ($call == null) {
-            return;
+            return abort(404);
         }
         $calles = GroupCalling::where('message_id', $messageId)
             ->where('group_id', $groupId)->pluck('to_id');
 
+        // caller call is recived
+        if(Auth::id() == $call->host_id){
+            $call->start_at = Carbon::now();
+            $call->save();
+        }
+       
         //group user
         $gorupUsers = User::whereIn('id', $calles)->get();
         $routeName = FacadesRequest::route()->getName();

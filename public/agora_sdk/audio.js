@@ -1,16 +1,34 @@
 let rtcAudio = {
     localAudioTrack: null,
-    client: null
+    client: null,
 };
 
 let optionsAudio = {
-    
     appId: null,
     channel: null,
     uid: null,
-    token: null
+    token: null,
 };
-async function joinAudioCall(appId,token,channel,uid) {
+// async function joinAudioCall(appId,token,channel,uid) {
+//     optionsAudio.appId = appId;
+//     optionsAudio.token = token;
+//     optionsAudio.channel = channel;
+//     optionsAudio.uid = uid;
+//     console.log(optionsAudio);
+//     await startBasicCall();
+
+//     // Join an RTC channel.
+//     await rtcAudio.client.join(optionsAudio.appId, optionsAudio.channel, optionsAudio.token, optionsAudio.uid);
+//     // Create a local audio track from the audio sampled by a microphone.
+//     rtcAudio.localAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
+
+//     // Publish the local audio tracks to the RTC channel.
+//     await rtcAudio.client.publish([rtcAudio.localAudioTrack]);
+
+//     console.log("publish success!");
+// }
+
+async function joinAudioCall(appId, token, channel, uid) {
     optionsAudio.appId = appId;
     optionsAudio.token = token;
     optionsAudio.channel = channel;
@@ -19,16 +37,25 @@ async function joinAudioCall(appId,token,channel,uid) {
     await startBasicCall();
 
     // Join an RTC channel.
-    await rtcAudio.client.join(optionsAudio.appId, optionsAudio.channel, optionsAudio.token, optionsAudio.uid);
+    await rtcAudio.client.join(
+        optionsAudio.appId,
+        optionsAudio.channel,
+        optionsAudio.token,
+        optionsAudio.uid
+    );
     // Create a local audio track from the audio sampled by a microphone.
     rtcAudio.localAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
+
+    //play the audio
+    rtcAudio.localAudioTrack.play();
+    alert(options.uid);
+    $("#audio-local-player").append(options.uid);
 
     // Publish the local audio tracks to the RTC channel.
     await rtcAudio.client.publish([rtcAudio.localAudioTrack]);
 
     console.log("publish success!");
 }
-
 
 async function startBasicCall() {
     // Create an AgoraRTCClient object.
@@ -45,8 +72,17 @@ async function startBasicCall() {
         if (mediaType === "audio") {
             // Get the RemoteAudioTrack object in the AgoraRTCRemoteUser object.
             const remoteAudioTrack = user.audioTrack;
+
             // Play the remote audio track.
             remoteAudioTrack.play();
+            new PNotify({
+                title: "Success notice",
+                text: user.uid,
+                type: "success",
+            });
+            // alert(user.uid);
+            //here we get the attend user Uid
+            // $("#audio-remote-playerlist").append(user.uid);
         }
 
         // Listen for the "user-unpublished" event
@@ -54,7 +90,6 @@ async function startBasicCall() {
             // Unsubscribe from the tracks of the remote user.
             await rtcAudio.client.unsubscribe(user);
         });
-
     });
 }
 

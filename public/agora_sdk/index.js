@@ -105,14 +105,6 @@ async function subscribe(user, mediaType) {
         // Play the remote video track.
         // Pass the DIV container and the SDK dynamically creates a player in the container for playing the remote video track.
         remoteVideoTrack.play(remotePlayerContainer);
-
-        //old code in button
-        //     const player = $(`<div id="player-wrapper-${uid}">
-        //     <div id="player-${uid}" class="player"></div>
-        //   </div>
-        // `);
-        //     $("#remote-playerlist").append(player);
-        //     user.videoTrack.play(`player-${uid}`);
     }
     if (mediaType === "audio") {
         user.audioTrack.play();
