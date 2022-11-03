@@ -4,11 +4,16 @@
     <div class="messenger-listView">
         {{-- Header and search bar --}}
         <div class="m-header">
+            <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                @csrf
+            </form>
             <nav>
                 <a href="#"><i class="fas fa-inbox"></i> <span class="messenger-headTitle">MESSAGES</span> </a>
                 {{-- header buttons --}}
+                
                 <nav class="m-header-right">
                     <a href="#"><i class="fas fa-cog settings-btn"></i></a>
+                    <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fas fa-sign-out-alt"></i></a>
                     <a href="#" class="listView-x"><i class="fas fa-times"></i></a>
                 </nav>
             </nav>

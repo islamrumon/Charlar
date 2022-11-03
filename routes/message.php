@@ -118,10 +118,6 @@ Route::post('/setActiveStatus', [MessagesController::class,'setActiveStatus'])->
 
 
 
-/*
-* [Group] view by id
-*/
-Route::get('/group/{id}', [MessagesController::class,'index'])->name('group');
 
 /*
 * user view by id.

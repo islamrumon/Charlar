@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('group_chats', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->enum('type',['public','private'])->default('public');
             $table->longText('about')->nullable();
             $table->string('code')->unique();
             $table->unsignedBigInteger('admin_id');

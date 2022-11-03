@@ -38,6 +38,7 @@ class GroupChatingController extends Controller
         $auth = Auth::user();
         $group = new GroupChat();
         $group->name = $request->name;
+        $group->type = $request->type;
         $group->code = Str::slug($request->name) . rendomForDigite();
         $group->about = $request->about;
         $group->admin_id = $auth->id;
@@ -64,10 +65,31 @@ class GroupChatingController extends Controller
         return view('group.add_users', compact('groupId',  'id', 'type', 'messengerColor', 'dark_mode'));
     }
 
+     // searchUser
 
-    public function addUsersStore(Request $request)
+     public function searchUser(Request $request)
+     {
+         $groupUsers = GroupParticipant::where('group_id',$request->group_id)->pluck('user_id');
+         
+         $records = User::whereNotIn('id',$groupUsers)
+         ->where('name', 'LIKE', "%{$request->key}%")
+         ->where('email', 'LIKE', "%{$request->key}%")
+         ->get();
+
+         $id = $request->group_id;
+         $views = view('group.layouts.user_search',compact('records','id'))->render();
+
+         return response()->json(['view'=>$views],200);
+     }
+
+
+    public function addUserGroup(Request $request)
     {
-        return $request;
+        $add = new GroupParticipant();
+        $add->group_id = $request->group_id;
+        $add->user_id = $request->user_id;
+        $add->save();
+        return response()->json(['message'=>'Done'],200);
     }
 
 

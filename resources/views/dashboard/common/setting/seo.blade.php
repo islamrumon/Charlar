@@ -32,7 +32,7 @@
 
                             <!--name-->
                             <label class="form-label">@translate(Meta Descriptions)</label>
-                            <textarea class="form-control" name="meta_desc"> @pureme(getSystemSetting('meta_desc'))</textarea>
+                            <textarea class="form-control" name="meta_desc">@pureme(getSystemSetting('meta_desc'))</textarea>
 
 
                         </div>

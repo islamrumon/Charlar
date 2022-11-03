@@ -74,9 +74,6 @@
                                             @translate(Admin)</option>
                                         <option value="user" {{ $user->type == 'user' ? 'selected' : null }}>
                                             @translate(User)</option>
-
-                                        <option value="agent" {{ $user->type == 'agent' ? 'selected' : null }}>
-                                            @translate(Agent)</option>
                                     </select>
                                 </div>
 
@@ -153,13 +150,7 @@
                                             value="{{ $user->city }}" placeholder="@translate(City)">
                                     </div>
                                 </div>
-                                <div class="col-sm-6 col-md-6">
-                                    <div class="mb-3">
-                                        <label class="form-label">@translate(State)</label>
-                                        <input class="form-control" type="number" name="state"
-                                            value="{{ $user->state }}" placeholder="@translate(State)">
-                                    </div>
-                                </div>
+                               
                                 <div class="col-sm-6 col-md-6">
                                     <div class="mb-3">
                                         <label class="form-label">@translate(Website)</label>
@@ -181,12 +172,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-12">
-                                    <div>
-                                        <label class="form-label">@translate(About Me)</label>
-                                        <textarea class="form-control" name="abount_me" rows="5" placeholder="@translate(Enter About your description)">@pureme($user->abount_me)</textarea>
-                                    </div>
-                                </div>
+                               
                             </div>
                         </div>
                         <div class="card-footer text-end">

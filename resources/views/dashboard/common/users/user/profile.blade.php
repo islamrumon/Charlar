@@ -115,13 +115,7 @@
                                             value="{{ $user->city }}" placeholder="@translate(City)">
                                     </div>
                                 </div>
-                                <div class="col-sm-6 col-md-6">
-                                    <div class="mb-3">
-                                        <label class="form-label">@translate(State)</label>
-                                        <input class="form-control" readonly type="number" name="state"
-                                            value="{{ $user->state }}" placeholder="@translate(State)">
-                                    </div>
-                                </div>
+                                
                                 <div class="col-sm-6 col-md-6">
                                     <div class="mb-3">
                                         <label class="form-label">@translate(Website)</label>
@@ -138,12 +132,7 @@
                                     </div>
 
                                 </div>
-                                <div class="col-md-12">
-                                    <div>
-                                        <label class="form-label">@translate(About Me)</label>
-                                        <textarea class="form-control" name="abount_me" rows="5" readonly placeholder="@translate(Enter About your description)">@pureme($user->abount_me)</textarea>
-                                    </div>
-                                </div>
+                                
                             </div>
                         </div>
                     </div>

@@ -635,7 +635,7 @@ channel.bind("messaging", function (data) {
 
     //jodi message bore ay active na take taholeo call dekha te hobe
     if (data.calling == true && data.joinUrl != null) {
-        window.open(data.joinUrl, "", "width=900");
+        window.open(data.joinUrl, "", "width=1272,height=779");
     }
 });
 
@@ -970,12 +970,14 @@ function getFavoritesList() {
  *-------------------------------------------------------------
  */
 function getSharedPhotos(user_id) {
+
     $.ajax({
         url: url + "/shared",
         method: "POST",
         data: { _token: access_token, user_id: user_id },
         dataType: "JSON",
         success: (data) => {
+            $(".shared-photos-list").empty();
             $(".shared-photos-list").html(data.shared);
         },
         error: () => {
@@ -1678,5 +1680,3 @@ function callingRequest(type) {
         },
     });
 }
-
-

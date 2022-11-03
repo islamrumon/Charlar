@@ -45,7 +45,7 @@
 
                     <div class="form-group">
                         <label for="exampleInputEmail1">@translate(Descriptions) <span class="text-danger">*</span></label>
-                        <textarea class="form-control editable" name="desc">@puerme($post->desc)</textarea>
+                        <textarea class="form-control editable" name="desc">@pureme($post->desc)</textarea>
                     </div>
 
                     <div class="form-group">

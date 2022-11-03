@@ -16,7 +16,7 @@
         <div class="card">
             <div class="card-body">
                 <!-- there are the main content-->
-                <table id="basic-1" class="table table-bordered table-striped">
+                <table  class="table table-bordered table-striped">
                     <thead>
                         <tr>
                             <th>@translate(S / L)</th>
@@ -90,7 +90,7 @@
                         @endforeach
                     </tbody>
                 </table>
-                {{$users->links()}}
+                {{$users->links('vendor.pagination.bootstrap-5')}}
             </div>
         </div>
     </div>

@@ -60,8 +60,6 @@
                                         <option selected value="">--@translate(Select)--</option>
                                         <option value="admin">@translate(Admin)</option>
                                         <option value="user">@translate(User)</option>
-                                        <option value="agent">@translate(Agent)</option>
-
                                     </select>
                                 </div>
 

@@ -1,6 +1,6 @@
 <script src="https://js.pusher.com/7.0.3/pusher.min.js"></script>
 <script>
-     "use strict"
+    "use strict"
     // Enable pusher logging - don't include this in production
     Pusher.logToConsole = true;
 
@@ -53,6 +53,76 @@
     const getMessengerType = () => $("meta[name=type]").attr("content");
     const setMessengerId = (id) => $("meta[name=id]").attr("content", id);
     const setMessengerType = (type) => $("meta[name=type]").attr("content", type);
+
+
+    //add to group 
+    function addToGroup(userId, groupId) {
+        NProgress.start();
+        //cal the ajax 
+        $.ajax({
+            url: "{{ route('add.user.group') }}",
+            method: "get",
+            method: "POST",
+            data: {
+                _token: access_token,
+                group_id : groupId,
+                user_id : userId
+            },
+            dataType: "JSON",
+            success: (data) => {
+                // avatar photo
+                console.log(data);
+                $(".member-" + userId).remove();
+                NProgress.done();
+                NProgress.remove();
+
+            },
+            error: () => {
+                console.log("Error, check server response!");
+                // remove loading bar
+                NProgress.done();
+                NProgress.remove();
+            },
+        });
+    }
+
+
+    // search user
+
+    function searchUser() {
+        var key = $('#serarchUser').val();
+        var group_id = $('#group_id').val();
+        console.log(key);
+        if (key.length >= 1) {
+            // show loading bar
+            NProgress.start();
+            //cal the ajax 
+            $.ajax({
+                url: "{{ route('user.search') }}",
+                method: "get",
+                data: {
+                    key: key,
+                    group_id: group_id
+                },
+                dataType: "JSON",
+                success: (data) => {
+                    // avatar photo
+                    console.log(data);
+                    $(".appendUsers").empty();
+                    $(".appendUsers").append(data.view);
+                    NProgress.done();
+                    NProgress.remove();
+
+                },
+                error: () => {
+                    console.log("Error, check server response!");
+                    // remove loading bar
+                    NProgress.done();
+                    NProgress.remove();
+                },
+            });
+        }
+    }
 
     /**
      *-------------------------------------------------------------
@@ -305,7 +375,7 @@
             });
     }
 
-   
+
 
     /**
      *-------------------------------------------------------------
@@ -362,7 +432,7 @@
      * Fetch id data (user/group) and update the view
      *-------------------------------------------------------------
      */
-    function IDinfo(id, type) {  
+    function IDinfo(id, type) {
         // clear temporary message id
         temporaryMsgId = 0;
         // clear typing now
@@ -533,7 +603,7 @@
     }
 
     function fetchMessages(id, type, newFetch = false) {
-    
+
         if (newFetch) {
             messagesPage = 1;
             noMoreMessages = false;
@@ -621,12 +691,12 @@
 
     // Listen to messages, and append if data received
     channel.bind("group-messaging", function(data) {
-     
+
         console.log("messageing");
         console.log(data);
         console.log("messageing end");
-        console.log("getMessengerId "+getMessengerId());
-        
+        console.log("getMessengerId " + getMessengerId());
+
         if (data.group_id == getMessengerId() && data.from_id != auth_id) {
             $(".messages").find(".message-hint").remove();
             messagesContainer.find(".messages").append(data.message);
@@ -640,7 +710,7 @@
 
         //jodi message bore ay active na take taholeo call dekha te hobe
         if (data.calling == true && data.joinUrl != null) {
-            window.open(data.joinUrl, "", "width=900");
+            window.open(data.joinUrl, "", "width=1272,height=779");
         }
     });
 
@@ -672,7 +742,7 @@
         }
     });
 
-    
+
     // listen to contact item updates event
     channel.bind("client-contactItem", function(data) {
         if (data.update_for == auth_id) {
@@ -753,7 +823,7 @@
             .remove();
         // seen
         $.ajax({
-            url: "{{route('group.messages.seen')}}",
+            url: "{{ route('group.messages.seen') }}",
             method: "POST",
             data: {
                 _token: access_token,
@@ -928,7 +998,7 @@
         });
     }
 
-  
+
     /**
      *-------------------------------------------------------------
      * Get shared photos
@@ -936,8 +1006,9 @@
      */
     // done
     function getSharedPhotos(group_id) {
+       
         $.ajax({
-            url: "{{route('group.file.shared')}}",
+            url: "{{ route('group.file.shared') }}",
             method: "POST",
             data: {
                 _token: access_token,
@@ -945,6 +1016,7 @@
             },
             dataType: "JSON",
             success: (data) => {
+                $(".shared-photos-list").empty();
                 $(".shared-photos-list").html(data.shared);
             },
             error: () => {
@@ -1075,7 +1147,7 @@
      * Delete Message By ID
      *-------------------------------------------------------------
      */
-     //done
+    //done
     function deleteMessage(id) {
         $.ajax({
             url: url + "/deleteMessage",
@@ -1126,9 +1198,9 @@
      *-------------------------------------------------------------
      */
 
-     //done
+    //done
     function updateSettings() {
-    
+
         const formData = new FormData($("#update-settings")[0]);
         if (messengerColor) {
             formData.append("messengerColor", messengerColor);
@@ -1191,7 +1263,7 @@
      *-------------------------------------------------------------
      */
 
-     // dorkar nai
+    // dorkar nai
     function setActiveStatus(status, user_id) {
         $.ajax({
             url: url + "/setActiveStatus",
@@ -1285,7 +1357,7 @@
         });
 
         // make favorites card dragable on click to slide.
-       
+
 
         // click action for list item [user/group]
         $("body").on("click", ".messenger-list-item", function() {
@@ -1501,7 +1573,7 @@
                 });
             });
 
-            $(".app-modal[data-name=groupcreate]")
+        $(".app-modal[data-name=groupcreate]")
             .find(".app-modal-footer .cancel")
             .on("click", function() {
                 app_modal({
@@ -1694,13 +1766,13 @@
 
     //group code start from here
     function removeFromGroup(url) {
-      $.ajax({
+        $.ajax({
             url: url,
             method: "get",
             dataType: "JSON",
             success: (data) => {
                 console.log(data);
-               $('.member-'+data.id).remove();
+                $('.member-' + data.id).remove();
             },
             error: () => {
                 // message card error status

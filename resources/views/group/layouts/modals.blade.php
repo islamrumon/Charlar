@@ -53,7 +53,7 @@
                             data-mode="{{ Auth::user()->dark_mode > 0 ? 1 : 0 }}"></span></p>
                     {{-- change messenger color  --}}
                     <p class="divider"></p>
-                  
+
                     <div class="update-messengerColor">
                         @foreach (config('chatify.colors') as $color)
                             <span style="background-color: {{ $color }}" data-color="{{ $color }}"
@@ -82,30 +82,38 @@
                 @csrf
                 <div class="app-modal-body">
                     <div class="form-group">
-                        <label for="inputEmail4">Group Name <span class="text-danger">*</span> </label>
+                        <label class="m-2" for="inputEmail4">Group Name <span class="text-danger">*</span> </label>
                         <input type="text" name="name" required class="form-control" id="inputEmail4"
                             placeholder="Group name">
                     </div>
 
                     <div class="form-group">
-                        <label for="inputAddress">About group</label>
+                        <label class="m-2" for="inputEmail4">Group Type <span class="text-danger">*</span> </label>
+                        <select required class="form-control" name="type">
+                        <option value="public">Public</option>
+                        <option value="private">Private</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="m-2">About group</label>
                         <textarea name="about" class="form-control"></textarea>
 
                     </div>
 
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="inputAddress2">Group Avatar</label>
-                            <input type="file" name="avatar" class="form-control" id="inputAddress2"
-                                placeholder="Apartment, studio, or floor">
-                        </div>
 
-                        <div class="form-group">
-                            <label for="inputAddress">Group Cover Photo</label>
-                            <input type="file" name="cover" class="form-control" id="inputAddress"
-                                placeholder="1234 Main St">
-                        </div>
+                    <div class="form-group">
+                        <label class="m-2" for="inputAddress2">Group Avatar</label>
+                        <input type="file" name="avatar" class="form-control" id="inputAddress2"
+                            placeholder="Apartment, studio, or floor">
                     </div>
+
+                    <div class="form-group">
+                        <label class="m-2" for="inputAddress">Group Cover Photo</label>
+                        <input type="file" name="cover" class="form-control" id="inputAddress"
+                            placeholder="1234 Main St">
+                    </div>
+
                 </div>
                 <div class="app-modal-footer">
                     <a href="javascript:void(0)" class="app-btn cancel">Cancel</a>

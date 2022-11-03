@@ -82,6 +82,7 @@ class GroupMessagnerController extends Controller
      */
     public function idFetchData(Request $request)
     {
+        
         // Favorite
         // $favorite = Chatify::inFavorite($request['id']);
         $favorite = 0;
@@ -91,8 +92,19 @@ class GroupMessagnerController extends Controller
         if ($group) {
             $userAvatar = filePath($group->avatar);
         }
-        $ids = GroupParticipant::where('group_id', $request['id'])->pluck('user_id');
-        $users = User::whereIn('id', $ids)->get()->shuffle();
+        $ids = GroupParticipant::where('group_id', $request['id'])->where('user_id',Auth::id())->first();
+       
+
+        // if auth user not add this public group 
+        if($group->type == 'public' && ($ids == null)){
+            $add = new GroupParticipant();
+            $add->group_id = $group->id;
+            $add->user_id = Auth::id();
+            $add->save();
+        }
+
+        $ids = GroupParticipant::where('group_id', $request['id'])->orderByDesc('created_at')->pluck('user_id');
+        $users = User::whereIn('id', $ids)->get();
         $view = view('group.layouts.info', compact('group','users'))->render();
 
         // send the response
@@ -103,6 +115,9 @@ class GroupMessagnerController extends Controller
             'user_avatar' => $userAvatar ?? null,
         ]);
     }
+
+
+   
 
     /**
      * This method to make a links for the attachments
@@ -217,7 +232,7 @@ class GroupMessagnerController extends Controller
      */
     public function fetch(Request $request)
     {
-        // return $request;
+        
         $query = Chatify::fetchMessagesQuery($request['id'])->latest();
         $messages = $query->paginate($request->per_page ?? $this->perPage);
         $totalMessages = $messages->total();
@@ -304,14 +319,6 @@ class GroupMessagnerController extends Controller
      */
     public function updateContactItem(Request $request)
     {
-        // Get user data
-        // $user = User::where('id', $request['user_id'])->first();
-        // if (!$user) {
-        //     return Response::json([
-        //         'message' => 'User not found!',
-        //     ], 401);
-        // }
-        // $contactItem = Chatify::getContactItem($user);
 
         //get the group
         $group = GroupChat::where('id', $request['group_id'])->first();
@@ -337,13 +344,14 @@ class GroupMessagnerController extends Controller
      */
     public function search(Request $request)
     {
-        // $addGroups = GroupParticipant::where('user_id',Auth::id())->pluck('group_id');
+        $addGroups = GroupParticipant::where('user_id',Auth::id())->pluck('group_id');
 
 
         $getRecords = null;
         $input = trim(filter_var($request['input']));
-        // $records = GroupChat::whereNotIn('id', $addGroups)
+        // $records = GroupChat::whereNotIn('id', $addGroups)->where('name', 'LIKE', "%{$input}%")
         $records = GroupChat::where('name', 'LIKE', "%{$input}%")
+            //  ->where('type','public')
             ->paginate($request->per_page ?? $this->perPage);
         foreach ($records->items() as $record) {
             $getRecords .= view('group.layouts.listItem', [

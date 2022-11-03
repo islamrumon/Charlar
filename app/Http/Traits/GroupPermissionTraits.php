@@ -140,9 +140,9 @@ trait GroupPermissionTraits
         $user->address = $request->address;
         $user->designation = $request->designation;
         $user->city = $request->city;
-        $user->state = $request->state;
+   
         $user->website = $request->website;
-        $user->abount_me = $request->abount_me;
+     
         $user->save();
         return back()->with(['message' => translate('User Profile Updated  successfully'), 'type' => 'success', 'title' => translate('Success')]);
     }
@@ -161,9 +161,6 @@ trait GroupPermissionTraits
         $user = User::where('id', Auth::id())->first();
         return view('dashboard.common.users.user.profile', compact('user'));
     }
-
-
-
 
 
     /*user banned*/

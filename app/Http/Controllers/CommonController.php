@@ -121,7 +121,7 @@ class CommonController extends Controller
 
 
 
-    public function clearCash()
+    public function clearCache()
     {
         Artisan::call('view:clear');
         Artisan::call('config:cache');

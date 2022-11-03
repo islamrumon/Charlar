@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->enum('genders',['Male','Female','Other'])->nullable();
             $table->boolean('banned')->default(false); // User cannot login if banned
-            $table->longText('avatar')->default('images/avatar.jpg');
+            $table->longText('avatar')->nullable();
             $table->timestamp('login_time')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
@@ -46,7 +46,7 @@ return new class extends Migration
             // $table->string('tiktok')->nullable();
             $table->string('whats_app')->nullable();
             $table->string('telegram')->nullable();
-            $table->string('cover')->default('cover.jpg');
+            $table->longText('cover')->nullable();
             
         });
     }

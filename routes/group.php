@@ -14,7 +14,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\GroupMessagnerController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
-Route::group(['middleware' => 'auth','prefix' => 'messanger'], function () {
+Route::group(['middleware' => 'auth','prefix' => 'group'], function () {
 
 /*
 * This is the main app route [Chatify Messenger]
@@ -23,13 +23,15 @@ Route::get('/', [GroupMessagnerController::class,'index'])->name('group.messange
 
 
 
-Route::post('profile/update',[HomeController::class,'profileUpdate'])->name('profile.update');
+// Route::post('profile/update',[HomeController::class,'profileUpdate'])->name('profile.update');
 
 /**
  *  Fetch info for specific id [user/group]
  */
 Route::post('/idInfo', [GroupMessagnerController::class,'idFetchData'])->name('group.info');
 
+Route::get('user/search',[GroupChatingController::class,'searchUser'])->name('user.search');
+Route::post('add/user/group',[GroupChatingController::class,'addUserGroup'])->name('add.user.group');
 /**
  * Send message route
  */

@@ -30,7 +30,7 @@
             {{-- center side --}}
             <td>
                 <p data-id="{{ $user->id }}" data-type="group">
-                    {{ strlen($user->name) > 12 ? trim(substr($user->name, 0, 12)) . '..' : $user->name }}
+                    {{ strlen($user->name) > 22 ? trim(substr($user->name, 0, 22)) . '..' : $user->name }}
                     @if ($lastMessage != null)
                         <span>{{ $lastMessage->created_at->diffForHumans() }}</span>
                     @endif
@@ -67,7 +67,7 @@
             {{-- center side --}}
             <td>
                 <p data-id="{{ $user->id }}" data-type="user">
-                    {{ strlen($user->name) > 12 ? trim(substr($user->name, 0, 12)) . '..' : $user->name }}
+                    {{ strlen($user->name) > 22 ? trim(substr($user->name, 0, 22)) . '..' : $user->name }}
             </td>
 
         </tr>
