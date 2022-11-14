@@ -22,6 +22,10 @@
 <script src='{{ asset('js/nprogress.js') }}'></script>
 <script src='{{ asset('vendor/livewire/livewire.js') }}'></script>
 
+<!-- Dropify -->
+<script src="{{ asset('/') }}/assets/vendor/dropify/dropify.min.js"></script>
+
+
 
 
 <script>
@@ -158,6 +162,10 @@
       imageUploadFLogo(this);
   });
 
+    // Profile Avatar Photo Upload Priview
+    $(document).ready(function () {
+        $(".dropify").dropify();
+    });
 
 </script>
 

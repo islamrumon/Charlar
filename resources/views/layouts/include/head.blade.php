@@ -8,3 +8,13 @@
 <meta name="author" content="{{ env('author') }}">
 <link rel="icon" href="{{ filePath(getSystemSetting('favicon_icon')) }}" type="image/x-icon">
 <link rel="shortcut icon" href="{{ filePath(getSystemSetting('favicon_icon')) }}" type="image/x-icon">
+
+<!-- boxicons -->
+{{--<link rel="stylesheet" type="text/css" href="{{ asset('/') }}/vendor/boxicons/boxicons.min.css">--}}
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+<!-- Dropify -->
+<link rel="stylesheet" href="{{ asset('/') }}/assets/vendor/dropify/dropify.min.css"/>
+
+<!-- Custom CSS -->
+<link rel="stylesheet" type="text/css" href="{{ asset('/') }}/assets/css/custom.css">

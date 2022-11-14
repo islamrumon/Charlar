@@ -32,8 +32,8 @@
 <script src="{{ asset('js/chatify/autosize.js') }}"></script>
 <script src='{{ asset('js/nprogress.js') }}'></script>
 
-
-
+<!-- Dropify -->
+<script src="{{ asset('/') }}/assets/vendor/dropify/dropify.min.js"></script>
 
 <script>
     "use strict"
@@ -168,7 +168,16 @@
     $("#imageUpload_f_logo").change(function() {
         imageUploadFLogo(this);
     });
+
+    // Profile Avatar Photo Upload Priview
+    $(document).ready(function () {
+        $(".dropify").dropify();
+    });
 </script>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+<link rel="stylesheet"
+      href="{{asset('css/bootstrap-material-design.css')}}" crossorigin="anonymous">
 
 @livewireScripts
 
