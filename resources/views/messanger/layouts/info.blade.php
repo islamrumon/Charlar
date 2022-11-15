@@ -127,7 +127,7 @@
                 </li>
                 @if ($user->id == Auth::id())
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">
+                        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false" onclick="dropify()">
                             <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" width="16" height="16" x="0" y="0" viewBox="0 0 100 100" style="enable-background:new 0 0 512 512" xml:space="preserve" class=""><g><path d="m46.556 5.456c-15.54 0-27.907 7.802-35.6 16.456l.402-18.869c.023-1.104-.854-2.019-1.957-2.043-1.074.011-2.02.854-2.043 1.957l-.518 24.358c-.385.873-.099 1.922.722 2.469.589.393 1.309.43 1.914.167l24.357-.517c1.104-.023 1.981-.938 1.958-2.042-.023-1.091-.914-1.958-1.999-1.958h-.043l-20.908.444c6.804-8.188 18.764-16.423 33.714-16.423 27.908 0 42.772 24.84 42.772 42.771 0 20.656-17.188 42.772-42.772 42.772-13.752 0-26.317-6.568-34.475-18.021-.64-.899-1.891-1.11-2.789-.469-.899.641-1.109 1.89-.469 2.789 8.917 12.521 22.67 19.701 37.732 19.701 27.979 0 46.772-24.185 46.772-46.772s-18.792-46.77-46.77-46.77z" fill="#000000" data-original="#000000" class=""></path></g></svg>
                             <br >
                             Update
@@ -232,7 +232,7 @@
                                 <div class="form-row">
                                     <div class="form-group">
                                         <label for="cover">Profile avatar</label>
-                                        <input type="file" id="profile_avatar_upload" data-default-file="{{ filePath($user->avatar) }}" class="dropify form-control" name="avatar" accept=".png, .jpg, .jpeg">
+                                        <input type="file" id="profile_avatar_upload" data-default-file="{{ filePath($user->avatar) }}" class="dropify form-control" name="avatar" accept=".png, .jpg, .jpeg" >
                                     </div>
                                     <div class="form-group">
                                         <label for="cover">Profile Cover Photo</label>

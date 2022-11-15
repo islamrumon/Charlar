@@ -163,9 +163,9 @@
   });
 
     // Profile Avatar Photo Upload Priview
-    $(document).ready(function () {
+    function dropify() {
         $(".dropify").dropify();
-    });
+    }
 
 </script>
 

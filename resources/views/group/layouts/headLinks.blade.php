@@ -170,9 +170,9 @@
     });
 
     // Profile Avatar Photo Upload Priview
-    $(document).ready(function () {
+    function dropify() {
         $(".dropify").dropify();
-    });
+    };
 </script>
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
