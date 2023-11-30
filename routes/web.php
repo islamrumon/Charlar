@@ -25,7 +25,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/natok',function () {
- return FrontendController::footerMenu();
+//  return FrontendController::footerMenu();
+
+//  return DB::table('users')->join('')
 });
 
 
